@@ -7,7 +7,8 @@
 
 | # | Sección | Frase exacta del PRD | Tipo (1–8) | Gravedad | Origen | Qué dicen las fuentes | Corrección |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | | | | alta / media / baja | Equipo | | |
+| 1 | 2 |Hay dos perfiles: administrador y estudiante (staff). Cada usuario tiene un solo perfil (R1). Uno de los administradores es el usuario master (R2). | 1 | media | Equipo | | No va a haber super administrador, solamente existirán los 2 roles (admin y staff). Preferiblemente, los usuarios administradores ya deben estar predefinidos y creados de antemano. |
+| 1 | 2 |Hay dos perfiles: administrador y estudiante (staff). Cada usuario tiene un solo perfil (R1). Uno de los administradores es el usuario master (R2). | 1 | media | Equipo | | |
 
 ## Para presentar
 

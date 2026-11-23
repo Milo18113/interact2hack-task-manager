@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brand board · Mesa de Taller · PrestaLab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Tokens: copiados de DESIGN.md §5. Ningún otro valor de color o fuente aparece en esta página. */
+:root {
+  --color-fondo: #F6F4EE;
+  --color-superficie: #FFFFFF;
+  --color-superficie-alta: #EFECE3;
+  --color-borde: #DDD8CC;
+  --color-borde-control: #8A8577;
+  --color-texto: #1E2328;
+  --color-texto-suave: #5A6068;
+  --color-acento: #1F5FBF;
+  --color-sobre-acento: #FFFFFF;
+  --color-reservado: #5B4BB7; --color-reservado-fondo: #ECE9FA;
+  --color-prestado: #1F6F8B; --color-prestado-fondo: #E3F1F6;
+  --color-por-vencer: #8A5A00; --color-por-vencer-fondo: #FCF0D6;
+  --color-vencido: #B42318; --color-vencido-fondo: #FDE7E5;
+  --color-devuelto: #276B43; --color-devuelto-fondo: #E4F3EA;
+  --fuente-texto: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --fuente-mono: "JetBrains Mono", ui-monospace, monospace;
+  --espacio-1: 4px; --espacio-2: 8px; --espacio-3: 12px; --espacio-4: 16px;
+  --espacio-5: 24px; --espacio-6: 32px; --espacio-7: 48px; --espacio-8: 64px;
+  --radio-control: 6px; --radio-tarjeta: 10px; --radio-etiqueta: 4px;
+  --alto-tactil: 44px;
+  --duracion-rapida: 120ms;
+}
+@media (prefers-reduced-motion: reduce) { :root { --duracion-rapida: 0ms; } }
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--color-fondo); color: var(--color-texto); font-family: var(--fuente-texto); font-size: 16px; line-height: 24px; }
+.contenedor { max-width: 1200px; margin: 0 auto; padding: var(--espacio-7) var(--espacio-6) var(--espacio-8); }
+@media (max-width: 640px) { .contenedor { padding: var(--espacio-6) var(--espacio-4); } }
+
+header.portada { border-bottom: 1px solid var(--color-borde); padding-bottom: var(--espacio-6); margin-bottom: var(--espacio-7); }
+.sobretitulo { font-family: var(--fuente-mono); font-size: 14px; line-height: 20px; font-weight: 500; color: var(--color-texto-suave); letter-spacing: .04em; text-transform: uppercase; margin: 0 0 var(--espacio-2); }
+h1 { font-size: 28px; line-height: 34px; font-weight: 700; margin: 0 0 var(--espacio-3); }
+h2 { font-size: 20px; line-height: 26px; font-weight: 700; margin: 0 0 var(--espacio-4); }
+h3 { font-size: 16px; line-height: 24px; font-weight: 700; margin: 0 0 var(--espacio-3); }
+p { margin: 0 0 var(--espacio-3); }
+.suave { color: var(--color-texto-suave); }
+.pequeno { font-size: 14px; line-height: 20px; }
+section { margin-bottom: var(--espacio-7); }
+.rejilla { display: grid; gap: var(--espacio-4); }
+.r2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.r3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.r5 { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.panel { background: var(--color-superficie); border: 1px solid var(--color-borde); border-radius: var(--radio-tarjeta); padding: var(--espacio-5); }
+
+/* Brief */
+.palabras { display: flex; flex-wrap: wrap; gap: var(--espacio-2); margin: var(--espacio-3) 0; }
+.palabras span { font-size: 20px; line-height: 26px; font-weight: 700; padding: var(--espacio-2) var(--espacio-4); background: var(--color-superficie-alta); border-radius: var(--radio-control); }
+
+/* Color */
+.muestra { border-radius: var(--radio-tarjeta); overflow: hidden; border: 1px solid var(--color-borde); background: var(--color-superficie); }
+.muestra .color { height: 72px; border-bottom: 1px solid var(--color-borde); }
+.muestra .datos { padding: var(--espacio-3); }
+.muestra code, .codigo { font-family: var(--fuente-mono); font-size: 14px; line-height: 20px; font-weight: 500; }
+.par { padding: var(--espacio-4); border-radius: var(--radio-tarjeta); }
+.par strong { display: block; font-size: 20px; line-height: 26px; }
+
+/* Tipografía */
+.escala div { display: flex; gap: var(--espacio-4); align-items: baseline; padding: var(--espacio-3) 0; border-bottom: 1px solid var(--color-borde); flex-wrap: wrap; }
+.escala div:last-child { border-bottom: 0; }
+.escala .nombre { width: 160px; flex: none; }
+
+/* Espaciado */
+.espacios { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--espacio-4); }
+.espacios div { text-align: center; }
+.espacios i { display: block; background: var(--color-acento); margin: 0 auto var(--espacio-2); }
+
+/* Componentes */
+.boton { display: inline-flex; align-items: center; justify-content: center; min-height: var(--alto-tactil); padding: 0 var(--espacio-5); border-radius: var(--radio-control); font: 700 16px/24px var(--fuente-texto); border: 1px solid transparent; cursor: pointer; transition: background-color var(--duracion-rapida); }
+.boton:focus-visible, .campo input:focus-visible { outline: 3px solid var(--color-acento); outline-offset: 2px; }
+.primario { background: var(--color-acento); color: var(--color-sobre-acento); }
+.secundario { background: var(--color-superficie); color: var(--color-acento); border-color: var(--color-borde-control); }
+.peligro { background: var(--color-superficie); color: var(--color-vencido); border-color: var(--color-vencido); }
+.boton[disabled] { opacity: .5; cursor: not-allowed; }
+.fila-botones { display: flex; flex-wrap: wrap; gap: var(--espacio-3); align-items: center; }
+
+.campo { display: flex; flex-direction: column; gap: var(--espacio-1); }
+.campo label { font-size: 14px; line-height: 20px; color: var(--color-texto-suave); }
+.campo input { min-height: var(--alto-tactil); border: 1px solid var(--color-borde-control); border-radius: var(--radio-control); padding: 0 var(--espacio-3); font: 16px/24px var(--fuente-texto); color: var(--color-texto); background: var(--color-superficie); width: 100%; }
+.campo.error input { border-color: var(--color-vencido); }
+.campo .mensaje { font-size: 14px; line-height: 20px; color: var(--color-vencido); }
+
+.insignia { display: inline-flex; align-items: center; gap: var(--espacio-1); padding: 2px var(--espacio-3) 2px var(--espacio-2); border-radius: 999px; font-size: 14px; line-height: 20px; font-weight: 700; white-space: nowrap; }
+.insignia svg { width: 16px; height: 16px; flex: none; }
+.e-reservado { color: var(--color-reservado); background: var(--color-reservado-fondo); }
+.e-prestado { color: var(--color-prestado); background: var(--color-prestado-fondo); }
+.e-por-vencer { color: var(--color-por-vencer); background: var(--color-por-vencer-fondo); }
+.e-vencido { color: var(--color-vencido); background: var(--color-vencido-fondo); }
+.e-devuelto { color: var(--color-devuelto); background: var(--color-devuelto-fondo); }
+.insignias { display: flex; flex-wrap: wrap; gap: var(--espacio-2); }
+
+.etiqueta { display: inline-block; font-family: var(--fuente-mono); font-size: 14px; line-height: 20px; font-weight: 500; background: var(--color-superficie-alta); border-radius: var(--radio-etiqueta); padding: 2px var(--espacio-2); }
+
+.telefono { max-width: 390px; background: var(--color-fondo); border: 1px solid var(--color-borde); border-radius: var(--radio-tarjeta); padding: var(--espacio-4); display: flex; flex-direction: column; gap: var(--espacio-3); }
+.tarjeta { background: var(--color-superficie); border: 1px solid var(--color-borde); border-radius: var(--radio-tarjeta); padding: var(--espacio-4); }
+.tarjeta .arriba { display: flex; justify-content: space-between; align-items: center; gap: var(--espacio-2); flex-wrap: wrap; margin-bottom: var(--espacio-2); }
+.tarjeta .equipo { font-size: 20px; line-height: 26px; font-weight: 700; margin: 0 0 var(--espacio-2); }
+.tarjeta .fecha { font-size: 14px; line-height: 20px; color: var(--color-texto-suave); margin: 0; }
+.tarjeta .fecha .codigo { color: var(--color-texto); }
+.tarjeta.vencida .fecha .codigo { color: var(--color-vencido); }
+
+.indicador .numero { font-size: 28px; line-height: 34px; font-weight: 700; }
+.indicador.cero .numero { color: var(--color-vencido); }
+.tabla-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; background: var(--color-superficie); border: 1px solid var(--color-borde); border-radius: var(--radio-tarjeta); min-width: 720px; }
+th, td { text-align: left; padding: var(--espacio-3) var(--espacio-4); border-bottom: 1px solid var(--color-borde); vertical-align: middle; }
+th { font-size: 14px; line-height: 20px; color: var(--color-texto-suave); font-weight: 700; }
+tr:last-child td { border-bottom: 0; }
+td .codigo.vence { color: var(--color-vencido); }
+
+.aviso { display: flex; gap: var(--espacio-3); align-items: flex-start; background: var(--color-superficie); border: 1px solid var(--color-borde); border-left: 4px solid; border-radius: var(--radio-control); padding: var(--espacio-3) var(--espacio-4); }
+.aviso svg { width: 20px; height: 20px; flex: none; margin-top: 2px; }
+.a-exito { border-left-color: var(--color-devuelto); } .a-exito svg { color: var(--color-devuelto); }
+.a-advertencia { border-left-color: var(--color-por-vencer); } .a-advertencia svg { color: var(--color-por-vencer); }
+.a-error { border-left-color: var(--color-vencido); } .a-error svg { color: var(--color-vencido); }
+.a-info { border-left-color: var(--color-acento); } .a-info svg { color: var(--color-acento); }
+
+.vacio { text-align: center; padding: var(--espacio-6) var(--espacio-4); border: 1px dashed var(--color-borde-control); border-radius: var(--radio-tarjeta); background: var(--color-superficie); }
+.esqueleto { background: var(--color-superficie-alta); border-radius: var(--radio-control); height: 16px; margin-bottom: var(--espacio-2); }
+.reglas li { margin-bottom: var(--espacio-2); }
+footer { border-top: 1px solid var(--color-borde); padding-top: var(--espacio-5); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-reloj" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
+  <symbol id="i-caja" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></g></symbol>
+  <symbol id="i-arena" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 21h12M7 3c0 5 10 5 10 9s-10 4-10 9M17 3c0 5-10 5-10 9s10 4 10 9"/></g></symbol>
+  <symbol id="i-alerta" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></g></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-llave" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-8 8-3-3 6.7-6.7-2-2L8 16l-3-3 8-8z"/></g></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/></g></symbol>
+</svg>
+
+<div class="contenedor">
+  <header class="portada">
+    <p class="sobretitulo">PrestaLab · Brand board · Generado desde DESIGN.md v1.0</p>
+    <h1>Mesa de Taller</h1>
+    <p class="suave">Sistema de diseño para gestionar los préstamos del laboratorio de robótica. Si algo de esta página no coincide con <span class="codigo">DESIGN.md</span>, manda <span class="codigo">DESIGN.md</span>.</p>
+  </header>
+
+  <section>
+    <h2>Brief</h2>
+    <div class="rejilla r2">
+      <div class="panel">
+        <h3>Personalidad</h3>
+        <div class="palabras"><span>ordenado</span><span>cercano</span><span>confiable</span></div>
+        <p class="suave pequeno">Referente: las etiquetas de inventario de un taller bien cuidado.</p>
+      </div>
+      <div class="panel">
+        <h3>Principios</h3>
+        <ol class="reglas pequeno">
+          <li><strong>Estado y fecha primero.</strong></li>
+          <li><strong>Nunca solo color:</strong> texto e icono en cada estado.</li>
+          <li><strong>Cada equipo tiene su etiqueta.</strong></li>
+          <li><strong>Un solo acento</strong> para lo que se puede hacer.</li>
+          <li><strong>Plano y en calma.</strong></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Color · base</h2>
+    <div class="rejilla r5">
+      <div class="muestra"><div class="color" style="background:var(--color-fondo)"></div><div class="datos"><strong>Fondo</strong><br><code>--color-fondo</code><br><code>#F6F4EE</code></div></div>
+      <div class="muestra"><div class="color" style="background:var(--color-superficie)"></div><div class="datos"><strong>Superficie</strong><br><code>--color-superficie</code><br><code>#FFFFFF</code></div></div>
+      <div class="muestra"><div class="color" style="background:var(--color-superficie-alta)"></div><div class="datos"><strong>Superficie alta</strong><br><code>--color-superficie-alta</code><br><code>#EFECE3</code></div></div>
+      <div class="muestra"><div class="color" style="background:var(--color-borde)"></div><div class="datos"><strong>Borde</strong><br><code>--color-borde</code><br><code>#DDD8CC</code></div></div>
+      <div class="muestra"><div class="color" style="background:var(--color-borde-control)"></div><div class="datos"><strong>Borde de control</strong><br><code>--color-borde-control</code><br><code>#8A8577</code> · 3.68:1</div></div>
+      <div class="muestra"><div class="color" style="background:var(--color-texto)"></div><div class="datos"><strong>Texto</strong><br><code>--color-texto</code><br><code>#1E2328</code> · 15.83:1</div></div>
+      <div class="muestra"><div class="color" style="background:var(--color-texto-suave)"></div><div class="datos"><strong>Texto suave</strong><br><code>--color-texto-suave</code><br><code>#5A6068</code> · 6.35:1</div></div>
+      <div class="muestra"><div class="color" style="background:var(--color-acento)"></div><div class="datos"><strong>Acento</strong><br><code>--color-acento</code><br><code>#1F5FBF</code> · 6.09:1</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Color · estados de un préstamo</h2>
+    <p class="suave pequeno">Contraste del texto sobre su propio fondo (WCAG 2.2, mínimo 4.5:1).</p>
+    <div class="rejilla r5">
+      <div class="par e-reservado"><strong>Reservado</strong><span class="codigo">#5B4BB7 / #ECE9FA</span><br><span class="codigo">5.61:1</span></div>
+      <div class="par e-prestado"><strong>Prestado</strong><span class="codigo">#1F6F8B / #E3F1F6</span><br><span class="codigo">4.91:1</span></div>
+      <div class="par e-por-vencer"><strong>Por vencer</strong><span class="codigo">#8A5A00 / #FCF0D6</span><br><span class="codigo">5.24:1</span></div>
+      <div class="par e-vencido"><strong>Vencido</strong><span class="codigo">#B42318 / #FDE7E5</span><br><span class="codigo">5.55:1</span></div>
+      <div class="par e-devuelto"><strong>Devuelto</strong><span class="codigo">#276B43 / #E4F3EA</span><br><span class="codigo">5.60:1</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tipografía</h2>
+    <div class="panel escala">
+      <div><span class="nombre suave pequeno">Título · 28/34 · 700</span><span style="font-size:28px;line-height:34px;font-weight:700">Mis préstamos</span></div>
+      <div><span class="nombre suave pequeno">Sección · 20/26 · 700</span><span style="font-size:20px;line-height:26px;font-weight:700">Kit de robótica móvil</span></div>
+      <div><span class="nombre suave pequeno">Base · 16/24 · 400</span><span>Devuelve el equipo completo y funcionando en el laboratorio.</span></div>
+      <div><span class="nombre suave pequeno">Pequeño · 14/20 · 400</span><span class="pequeno">Código de inventario</span></div>
+      <div><span class="nombre suave pequeno">Código · 14/20 · 500 mono</span><span class="codigo">KIT-014 · 27 nov 2026, 17:00</span></div>
+      <div><span class="nombre suave pequeno">Legibilidad</span><span style="font-size:20px;line-height:26px">Il1 · O0 · rn m</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Espaciado y radios</h2>
+    <div class="panel">
+      <div class="espacios">
+        <div><i style="width:4px;height:4px"></i><span class="codigo">1 · 4</span></div>
+        <div><i style="width:8px;height:8px"></i><span class="codigo">2 · 8</span></div>
+        <div><i style="width:12px;height:12px"></i><span class="codigo">3 · 12</span></div>
+        <div><i style="width:16px;height:16px"></i><span class="codigo">4 · 16</span></div>
+        <div><i style="width:24px;height:24px"></i><span class="codigo">5 · 24</span></div>
+        <div><i style="width:32px;height:32px"></i><span class="codigo">6 · 32</span></div>
+        <div><i style="width:48px;height:48px"></i><span class="codigo">7 · 48</span></div>
+        <div><i style="width:64px;height:64px"></i><span class="codigo">8 · 64</span></div>
+      </div>
+      <p class="suave pequeno" style="margin-top:var(--espacio-4)">Radios: control 6 px · tarjeta 10 px · etiqueta 4 px. Área táctil mínima: 44 px.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Componentes</h2>
+    <div class="rejilla r2">
+      <div class="panel">
+        <h3>Botón</h3>
+        <div class="fila-botones">
+          <button class="boton primario" type="button">Reservar</button>
+          <button class="boton secundario" type="button">Ver detalle</button>
+          <button class="boton peligro" type="button">Cancelar reserva</button>
+        </div>
+        <div class="fila-botones" style="margin-top:var(--espacio-3)">
+          <button class="boton primario" type="button" disabled>Reservar</button>
+          <span class="pequeno" style="color:var(--color-vencido)">Tienes un préstamo vencido.</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Campo de formulario</h3>
+        <div class="rejilla">
+          <div class="campo"><label for="c1">Código de inventario</label><input id="c1" value="KIT-014"></div>
+          <div class="campo error"><label for="c2">Correo institucional</label><input id="c2" value="ana.torres@" aria-describedby="c2e"><span class="mensaje" id="c2e">Escribe un correo institucional completo.</span></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Insignia de estado</h3>
+        <div class="insignias">
+          <span class="insignia e-reservado"><svg aria-hidden="true"><use href="#i-reloj"/></svg>Reservado</span>
+          <span class="insignia e-prestado"><svg aria-hidden="true"><use href="#i-caja"/></svg>Prestado</span>
+          <span class="insignia e-por-vencer"><svg aria-hidden="true"><use href="#i-arena"/></svg>Por vencer</span>
+          <span class="insignia e-vencido"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Vencido</span>
+          <span class="insignia e-devuelto"><svg aria-hidden="true"><use href="#i-check"/></svg>Devuelto</span>
+          <span class="insignia e-por-vencer"><svg aria-hidden="true"><use href="#i-llave"/></svg>En mantenimiento</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Etiqueta de inventario</h3>
+        <p><span class="etiqueta">KIT-014</span> Kit de robótica móvil</p>
+        <p><span class="etiqueta">SEN-102</span> Sensor ultrasónico</p>
+        <p style="margin:0"><span class="etiqueta">HER-203</span> Multímetro digital</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tarjeta de préstamo · celular (390 px)</h2>
+    <div class="telefono">
+      <h3 style="margin:0">Mis préstamos</h3>
+      <article class="tarjeta">
+        <div class="arriba"><span class="etiqueta">KIT-014</span><span class="insignia e-prestado"><svg aria-hidden="true"><use href="#i-caja"/></svg>Prestado</span></div>
+        <p class="equipo">Kit de robótica móvil</p>
+        <p class="fecha">Devolver hasta <span class="codigo">27 nov 2026, 17:00</span></p>
+      </article>
+      <article class="tarjeta">
+        <div class="arriba"><span class="etiqueta">HER-203</span><span class="insignia e-por-vencer"><svg aria-hidden="true"><use href="#i-arena"/></svg>Por vencer</span></div>
+        <p class="equipo">Multímetro digital</p>
+        <p class="fecha">Devolver hasta <span class="codigo">24 nov 2026, 17:00</span></p>
+      </article>
+      <article class="tarjeta vencida">
+        <div class="arriba"><span class="etiqueta">SEN-102</span><span class="insignia e-vencido"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Vencido</span></div>
+        <p class="equipo">Sensor ultrasónico</p>
+        <p class="fecha">Devolver hasta <span class="codigo">20 nov 2026, 17:00</span></p>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tablero · escritorio</h2>
+    <div class="rejilla r3" style="margin-bottom:var(--espacio-4)">
+      <div class="panel indicador"><div class="numero">6</div><div class="suave pequeno">6 de 10 kits disponibles</div></div>
+      <div class="panel indicador"><div class="numero">14</div><div class="suave pequeno">14 de 20 sensores disponibles</div></div>
+      <div class="panel indicador cero"><div class="numero">0</div><div class="pequeno" style="color:var(--color-vencido)">Sin herramientas disponibles</div></div>
+    </div>
+    <div class="tabla-scroll">
+      <table>
+        <thead><tr><th>Código</th><th>Equipo</th><th>Estudiante</th><th>Devolver hasta</th><th>Estado</th><th></th></tr></thead>
+        <tbody>
+          <tr><td><span class="etiqueta">SEN-102</span></td><td>Sensor ultrasónico</td><td>Ana Torres</td><td><span class="codigo vence">20 nov, 17:00</span></td><td><span class="insignia e-vencido"><svg aria-hidden="true"><use href="#i-alerta"/></svg>Vencido</span></td><td><button class="boton secundario" type="button">Registrar devolución</button></td></tr>
+          <tr><td><span class="etiqueta">HER-203</span></td><td>Multímetro digital</td><td>Diego Mena</td><td><span class="codigo">24 nov, 17:00</span></td><td><span class="insignia e-por-vencer"><svg aria-hidden="true"><use href="#i-arena"/></svg>Por vencer</span></td><td><button class="boton secundario" type="button">Registrar devolución</button></td></tr>
+          <tr><td><span class="etiqueta">KIT-014</span></td><td>Kit de robótica móvil</td><td>Lucía Paredes</td><td><span class="codigo">27 nov, 17:00</span></td><td><span class="insignia e-prestado"><svg aria-hidden="true"><use href="#i-caja"/></svg>Prestado</span></td><td><button class="boton secundario" type="button">Registrar devolución</button></td></tr>
+          <tr><td><span class="etiqueta">KIT-007</span></td><td>Kit de brazo robótico</td><td>Mateo Cruz</td><td><span class="codigo">—</span></td><td><span class="insignia e-reservado"><svg aria-hidden="true"><use href="#i-reloj"/></svg>Reservado</span></td><td><button class="boton secundario" type="button">Registrar entrega</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Avisos y estados de pantalla</h2>
+    <div class="rejilla r2">
+      <div class="rejilla">
+        <div class="aviso a-exito" role="status"><svg aria-hidden="true"><use href="#i-check"/></svg><span>Devolución registrada. <span class="etiqueta">KIT-014</span> vuelve a estar disponible.</span></div>
+        <div class="aviso a-advertencia" role="status"><svg aria-hidden="true"><use href="#i-arena"/></svg><span>Tu préstamo de <span class="etiqueta">HER-203</span> vence mañana a las 17:00.</span></div>
+        <div class="aviso a-error" role="alert"><svg aria-hidden="true"><use href="#i-alerta"/></svg><span>No puedes reservar: tienes un préstamo vencido.</span></div>
+        <div class="aviso a-info" role="status"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Retira tu reserva en las próximas 24 horas.</span></div>
+      </div>
+      <div class="rejilla">
+        <div class="vacio"><h3>No tienes préstamos</h3><p class="suave pequeno" style="margin:0">Busca algo en el Catálogo.</p></div>
+        <div class="panel" aria-label="Cargando"><div class="esqueleto" style="width:30%"></div><div class="esqueleto" style="width:70%"></div><div class="esqueleto" style="width:50%;margin:0"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="suave pequeno">
+    <p>Mesa de Taller v1.0 · PrestaLab · Ejemplo del Avance 2, Desarrollo Web 2. Fuentes: Atkinson Hyperlegible y JetBrains Mono (Google Fonts).</p>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección 1 · Pizarra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Sora:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+/* =====================================================================
+   DIRECCIÓN 1 · PIZARRA
+   Lista vertical como Google Tasks sobre un pizarrón: sin tarjetas,
+   filas separadas por líneas finas, el estado como texto con icono y
+   una barra izquierda de 4 px solo para lo que pide atención.
+   ===================================================================== */
+
+/* Insignia: texto + icono, sin relleno. El color refuerza, el texto informa. */
+.badge { display: inline-flex; align-items: center; gap: 6px; font: 600 12px/1 var(--body); letter-spacing: 0.14em; text-transform: uppercase; }
+.badge.no-asignada { color: var(--i2h-muted); }
+.badge.pendiente { color: var(--i2h-white); }
+.badge.ejecucion { color: var(--i2h-white); }
+.badge.ejecucion .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--i2h-lime); }
+.badge.completada { color: var(--i2h-muted); }
+.badge.vencida { color: var(--estado-rojo); }
+.badge.proxima { color: var(--estado-ambar); }
+.badges { display: flex; flex-wrap: wrap; gap: 24px; }
+
+/* Franja de tarea: cada tarea es su propio contenedor, con borde solo arriba
+   y abajo, como un renglón del pizarrón. Se abre al tocarla (detalle + checklist).
+   Borde al 40 % para llegar a 3:1: delimita un elemento interactivo. */
+.task { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; padding: 16px 44px 16px 20px; margin: 0 0 8px; border-top: 2px solid var(--borde-control); border-bottom: 2px solid var(--borde-control); position: relative; color: inherit; text-decoration: none; cursor: pointer; transition: background 200ms var(--ease); }
+.task::after { content: '›'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font: 400 28px/1 var(--body); color: var(--i2h-muted); }
+.task:hover { background: var(--i2h-purple-08); }
+.task:hover::after { color: var(--i2h-purple); }
+.task::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: transparent; }
+.task.is-vencida::before { background: var(--estado-rojo); }
+.task.is-proxima::before { background: var(--estado-ambar); }
+.task.is-ejecucion::before { background: var(--i2h-lime); }
+.task-title { font: 600 17px/1.35 var(--body); }
+.task.is-completada .task-title { color: var(--i2h-muted); }
+.task-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 14px; color: var(--i2h-muted); }
+.task-meta span { display: inline-flex; align-items: center; gap: 6px; }
+.task-side { display: grid; justify-items: end; align-content: start; gap: 8px; }
+.task-progress { font: 600 14px/1 var(--body); color: var(--i2h-muted); }
+.task-badges { display: flex; flex-wrap: wrap; gap: 14px; grid-column: 1 / -1; }
+
+/* Checklist estilo Google Tasks: casilla cuadrada; lo hecho se apaga y se tacha */
+.check { display: flex; align-items: center; gap: 14px; min-height: 52px; padding: 8px 0; border-bottom: 1px solid var(--i2h-hair); cursor: pointer; }
+.check input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.check .box { width: 24px; height: 24px; flex: none; border: 2px solid var(--borde-control); display: grid; place-items: center; transition: background 200ms var(--ease); }
+.check .box .ico { width: 16px; height: 16px; stroke: var(--i2h-ink); opacity: 0; }
+.check input:checked + .box { background: var(--i2h-white); border-color: var(--i2h-white); }
+.check input:checked + .box .ico { opacity: 1; }
+.check input:checked ~ .label { color: var(--i2h-muted); text-decoration: line-through; }
+.check input:focus-visible + .box { outline: 3px solid var(--i2h-lime); outline-offset: 2px; }
+
+/* Botones */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 20px; border: 2px solid transparent; font: 600 16px/1 var(--body); cursor: pointer; transition: background 200ms var(--ease), color 200ms var(--ease); }
+.btn-primary { background: var(--i2h-purple); color: var(--i2h-ink); }
+.btn-primary:hover { background: var(--i2h-lime); }
+.btn-secondary { background: transparent; color: var(--i2h-purple); border-color: var(--i2h-purple); }
+.btn-secondary:hover { background: var(--i2h-purple); color: var(--i2h-ink); }
+.btn[disabled] { background: transparent; color: var(--i2h-muted); border: 2px dashed var(--borde-control); cursor: not-allowed; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.hint { font-size: 14px; color: var(--i2h-muted); }
+
+/* Campo */
+.field { display: grid; gap: 8px; }
+.field label { font: 600 14px/1.2 var(--body); }
+.field textarea { min-height: 96px; padding: 12px; background: var(--superficie); border: 2px solid var(--borde-control); resize: vertical; font-size: 16px; }
+.field small { color: var(--i2h-muted); font-size: 13px; }
+
+/* Aviso */
+.notice { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; padding: 14px 16px; border-left: 4px solid var(--i2h-purple); background: var(--i2h-purple-08); }
+.notice .ico { margin-top: 2px; color: var(--i2h-purple); }
+.notice.vencida { border-color: var(--estado-rojo); background: rgba(255, 107, 107, 0.08); }
+.notice.vencida .ico { color: var(--estado-rojo); }
+.notice b { font-weight: 600; }
+.notice p { grid-column: 2; font-size: 14px; color: var(--i2h-muted); }
+.notices { display: grid; gap: 12px; max-width: 520px; }
+
+/* Indicador del tablero: fila de cifras con su nombre */
+.meter { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--i2h-faint); border-bottom: 1px solid var(--i2h-faint); }
+.meter div { padding: 16px; border-left: 1px solid var(--i2h-hair); }
+.meter div:first-child { border-left: 0; }
+.meter b { display: block; font: 900 44px/0.9 var(--display); }
+.meter span { font: 600 12px/1.2 var(--body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--i2h-muted); }
+.meter .is-vencida b { color: var(--estado-rojo); }
+
+/* Pantallas */
+.screen-pad { padding: 20px 16px; }
+.screen-h { font: 900 32px/0.95 var(--display); text-transform: uppercase; margin: 8px 0 12px; }
+.detail-meta { display: grid; gap: 8px; font-size: 15px; color: var(--i2h-muted); margin-bottom: 20px; }
+.detail-meta span { display: flex; gap: 8px; align-items: center; }
+.sticky-cta { position: sticky; bottom: 0; padding: 12px 16px; background: var(--i2h-black); border-top: 1px solid var(--i2h-faint); display: grid; gap: 8px; }
+.sticky-cta .btn { width: 100%; }
+.group-h { display: flex; justify-content: space-between; align-items: baseline; padding: 24px 16px 8px 20px; font: 900 24px/1 var(--display); text-transform: uppercase; }
+.group-h small { font: 600 14px/1 var(--body); color: var(--i2h-muted); }
+@media (max-width: 640px) { .meter { grid-template-columns: repeat(3, 1fr); } .meter div:nth-child(4) { border-left: 0; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2 21h20L12 3z"/><path d="M12 10v5M12 18h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></symbol>
+  <symbol id="i-user-off" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/><path d="M3 3l18 18"/></symbol>
+  <symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M7 3v3l5 6 5-6V3M7 21v-3l5-6 5 6v3"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2.5.5 4 2.5 4 5.5"/></symbol>
+</svg>
+
+<main class="tile">
+  <header class="tile-head">
+    <p class="kicker">Dirección 1 de 3 · Style tile</p>
+    <h1 class="tile-title">La <em>pizarra</em> de pendientes</h1>
+    <p class="tile-lead">Una lista vertical, como Google Tasks escrita en un pizarrón. Cada tarea es una franja con borde arriba y abajo, que se abre para ver su detalle y su checklist; el estado va como texto con icono y una barra de 4 px solo en lo que pide atención. Lo hecho se apaga y se tacha.</p>
+    <div class="tile-words"><span>Bold</span><span>Calls-to-action</span><span>Understandable</span></div>
+  </header>
+
+  <section class="section">
+    <h2 class="section-title">Paleta</h2>
+    <p class="section-note">Negro, morado, lima y tinta salen del brandboard. Rojo y ámbar son propuesta del equipo para Vencida y «próxima a vencer», que la marca no cubre.</p>
+    <div class="swatches">
+      <div class="swatch"><i style="background:#050307"></i><div><b>Negro</b><span>#050307 · fondo</span></div></div>
+      <div class="swatch"><i style="background:#FFFFFF"></i><div><b>Tiza</b><span>#FFFFFF · texto</span></div></div>
+      <div class="swatch"><i style="background:#A46CFB"></i><div><b>Morado</b><span>#A46CFB · acción</span></div></div>
+      <div class="swatch"><i style="background:#5CF000"></i><div><b>Lima</b><span>#5CF000 · en ejecución</span></div></div>
+      <div class="swatch"><i style="background:#FF6B6B"></i><div><b>Rojo</b><span>#FF6B6B · vencida</span></div></div>
+      <div class="swatch"><i style="background:#FFC857"></i><div><b>Ámbar</b><span>#FFC857 · próxima</span></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Tipografía</h2>
+    <div class="type-row"><small>Big Shoulders 900 · 32</small><span style="font:900 32px/0.95 var(--display);text-transform:uppercase">Check-in de participantes</span></div>
+    <div class="type-row"><small>Sora 600 · 17</small><span style="font:600 17px/1.35 var(--body)">Armar mesas del hall principal</span></div>
+    <div class="type-row"><small>Sora 400 · 16</small><span>Hall principal · Vence sáb 20 feb, 10:00</span></div>
+    <div class="type-row"><small>Sora 600 · 12 · +0,14 em</small><span class="badge pendiente">Pendiente</span></div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Insignias de estado</h2>
+    <p class="section-note">Los cinco estados del PRD (R8) y la marca «próxima a vencer» (R16), que se suma al estado y no lo reemplaza.</p>
+    <div class="badges">
+      <span class="badge no-asignada"><svg class="ico ico-sm"><use href="#i-user-off"/></svg>No asignada</span>
+      <span class="badge pendiente"><svg class="ico ico-sm"><use href="#i-clock"/></svg>Pendiente</span>
+      <span class="badge ejecucion"><span class="dot"></span>En ejecución</span>
+      <span class="badge completada"><svg class="ico ico-sm"><use href="#i-check"/></svg>Completada</span>
+      <span class="badge vencida"><svg class="ico ico-sm"><use href="#i-alert"/></svg>Vencida</span>
+      <span class="badge proxima"><svg class="ico ico-sm"><use href="#i-hourglass"/></svg>Próxima a vencer</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Componentes</h2>
+    <p class="section-note">Botón, campo de observaciones y avisos dentro de la herramienta.</p>
+    <div class="btn-row" style="margin-bottom:12px">
+      <button class="btn btn-primary">Confirmar ejecución</button>
+      <button class="btn btn-secondary">Guardar avance</button>
+      <button class="btn" disabled>Confirmar ejecución</button>
+    </div>
+    <p class="hint" style="margin-bottom:32px">Deshabilitado: «Faltan 3 pasos por marcar» (R11).</p>
+    <div class="field" style="max-width:520px;margin-bottom:32px">
+      <label for="obs1">Observaciones (opcional)</label>
+      <textarea id="obs1">Faltan 20 manillas, pedí más a coordinación.</textarea>
+      <small>Las ven todos los responsables de la tarea.</small>
+    </div>
+    <div class="notices">
+      <div class="notice"><svg class="ico"><use href="#i-bell"/></svg><b>Se te asignó «Check-in de participantes»</b><p>Hall principal · vence hoy a las 10:00</p></div>
+      <div class="notice vencida"><svg class="ico"><use href="#i-alert"/></svg><b>«Preparar sala de mentorías» venció</b><p>Todavía puedes completarla.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Pantallas</h2>
+    <div class="screens">
+      <div>
+        <div class="phone">
+          <div class="phone-bar"><span>9:41</span><span>Estudiante</span></div>
+          <div class="screen-pad">
+            <span class="badge ejecucion"><span class="dot"></span>En ejecución</span>
+            &nbsp;&nbsp;<span class="badge proxima"><svg class="ico ico-sm"><use href="#i-hourglass"/></svg>Próxima a vencer</span>
+            <h3 class="screen-h">Check-in de participantes</h3>
+            <div class="detail-meta">
+              <span><svg class="ico ico-sm"><use href="#i-pin"/></svg>Hall principal</span>
+              <span><svg class="ico ico-sm"><use href="#i-clock"/></svg>Vence hoy, sáb 20 feb, 10:00 · faltan 1 h 20 min</span>
+              <span><svg class="ico ico-sm"><use href="#i-users"/></svg>Ana Torres, Luis Mena</span>
+            </div>
+            <p class="task-progress" style="margin-bottom:4px">2 de 5 pasos</p>
+            <label class="check"><input type="checkbox" checked><span class="box"><svg class="ico"><use href="#i-check"/></svg></span><span class="label">Recoger las listas impresas en coordinación</span></label>
+            <label class="check"><input type="checkbox" checked><span class="box"><svg class="ico"><use href="#i-check"/></svg></span><span class="label">Instalar 2 laptops en la mesa de registro</span></label>
+            <label class="check"><input type="checkbox"><span class="box"><svg class="ico"><use href="#i-check"/></svg></span><span class="label">Probar el lector de códigos QR</span></label>
+            <label class="check"><input type="checkbox"><span class="box"><svg class="ico"><use href="#i-check"/></svg></span><span class="label">Entregar una manilla a cada participante</span></label>
+            <label class="check"><input type="checkbox"><span class="box"><svg class="ico"><use href="#i-check"/></svg></span><span class="label">Reportar el total de asistentes</span></label>
+          </div>
+          <div class="sticky-cta">
+            <button class="btn btn-primary">Guardar avance</button>
+            <p class="hint">Con los 5 pasos marcados, podrás confirmar la ejecución.</p>
+          </div>
+        </div>
+        <p class="caption">Detalle de tarea en el celular, con el checklist a medio completar.</p>
+      </div>
+
+      <div>
+        <div class="desk">
+          <div class="desk-bar"><span>Tablero de cumplimiento · Administrador</span></div>
+          <div class="meter">
+            <div class="is-vencida"><b>1</b><span>Vencidas</span></div>
+            <div><b>3</b><span>En ejecución</span></div>
+            <div><b>5</b><span>Pendientes</span></div>
+            <div><b>2</b><span>No asignadas</span></div>
+            <div><b>12</b><span>Completadas</span></div>
+          </div>
+          <div class="group-h">Vencidas <small>1</small></div>
+          <a href="#" class="task is-vencida">
+            <span class="task-title">Preparar sala de mentorías del Reto 02</span>
+            <div class="task-side"><span class="task-progress">1 de 3</span></div>
+            <div class="task-meta"><span><svg class="ico ico-sm"><use href="#i-pin"/></svg>Sala 3 · Edificio Galileo</span><span><svg class="ico ico-sm"><use href="#i-clock"/></svg>Venció 08:30</span><span><svg class="ico ico-sm"><use href="#i-users"/></svg>Mateo Vela</span></div>
+            <div class="task-badges"><span class="badge vencida"><svg class="ico ico-sm"><use href="#i-alert"/></svg>Vencida</span></div>
+          </a>
+          <div class="group-h">En ejecución <small>3</small></div>
+          <a href="#" class="task is-proxima">
+            <span class="task-title">Check-in de participantes</span>
+            <div class="task-side"><span class="task-progress">2 de 5</span></div>
+            <div class="task-meta"><span><svg class="ico ico-sm"><use href="#i-pin"/></svg>Hall principal</span><span><svg class="ico ico-sm"><use href="#i-clock"/></svg>Vence 10:00</span><span><svg class="ico ico-sm"><use href="#i-users"/></svg>Ana Torres, Luis Mena</span></div>
+            <div class="task-badges"><span class="badge ejecucion"><span class="dot"></span>En ejecución</span><span class="badge proxima"><svg class="ico ico-sm"><use href="#i-hourglass"/></svg>Próxima a vencer</span></div>
+          </a>
+          <div class="group-h">Pendientes <small>5</small></div>
+          <a href="#" class="task">
+            <span class="task-title">Armar mesas del hall para la noche de código</span>
+            <div class="task-side"><span class="task-progress">0 de 4</span></div>
+            <div class="task-meta"><span><svg class="ico ico-sm"><use href="#i-pin"/></svg>Hall principal</span><span><svg class="ico ico-sm"><use href="#i-clock"/></svg>Vence 21:00</span><span><svg class="ico ico-sm"><use href="#i-users"/></svg>Sofía Ruiz</span></div>
+            <div class="task-badges"><span class="badge pendiente"><svg class="ico ico-sm"><use href="#i-clock"/></svg>Pendiente</span></div>
+          </a>
+          <div class="group-h">Completadas <small>12</small></div>
+          <a href="#" class="task is-completada">
+            <span class="task-title">Repartir kits de bienvenida</span>
+            <div class="task-side"><span class="task-progress">4 de 4</span></div>
+            <div class="task-meta"><span><svg class="ico ico-sm"><use href="#i-check"/></svg>Confirmó Sofía Ruiz, 09:42</span></div>
+            <div class="task-badges"><span class="badge completada"><svg class="ico ico-sm"><use href="#i-check"/></svg>Completada</span></div>
+          </a>
+        </div>
+        <p class="caption">Tablero de escritorio: resumen por estado arriba y la lista agrupada en el orden de R19.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Qué gana y qué arriesga</h2>
+    <p class="section-note"><b>Gana:</b> es la más fácil de leer y la más fiel al referente; escala bien con muchas tareas; cumple «el lima es escaso» porque solo aparece como punto. <b>Arriesga:</b> es la menos «bold»; en el tablero las secciones largas obligan a desplazarse. Las franjas resuelven que se entienda que cada tarea se abre, a costa de algo más de alto por tarea.</p>
+  </section>
+</main>
+</body>
+</html>

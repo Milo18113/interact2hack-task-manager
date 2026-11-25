@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección 3 · Columnas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Sora:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+/* =====================================================================
+   DIRECCIÓN 3 · COLUMNAS
+   Un pizarrón dividido en columnas por estado, como un tablero de
+   operaciones. Tarjetas compactas, chips con punto de color y una barra
+   de progreso morado → lima (el degradado que el brandboard reserva
+   para progreso). En el celular, las columnas se vuelven pestañas.
+   ===================================================================== */
+
+/* Chip del brandboard: borde 2 px, Sora 600, punto de color para el estado */
+.chip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border: 2px solid var(--i2h-faint); font: 600 13px/1 var(--body); }
+.chip .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.chip.no-asignada .dot { border: 2px solid var(--i2h-muted); }
+.chip.pendiente .dot { background: var(--i2h-white); }
+.chip.ejecucion .dot { background: var(--i2h-lime); }
+.chip.completada { color: var(--i2h-muted); }
+.chip.vencida { border-color: var(--estado-rojo); color: var(--estado-rojo); }
+.chip.proxima { border-color: var(--estado-ambar); color: var(--estado-ambar); }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Columnas del tablero */
+.board { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; padding: 16px; }
+.col { display: grid; gap: 10px; align-content: start; }
+.col-h { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0 8px; border-top: 4px solid var(--i2h-faint); font: 900 24px/1 var(--display); text-transform: uppercase; }
+.col-h small { font: 600 14px/1 var(--body); color: var(--i2h-muted); }
+.col.vencida .col-h { border-top-color: var(--estado-rojo); color: var(--estado-rojo); }
+.col.ejecucion .col-h { border-top-color: var(--i2h-lime); }
+.col.pendiente .col-h { border-top-color: var(--i2h-white); }
+.col.no-asignada .col-h { border-top-style: dashed; border-top-color: var(--borde-control); }
+
+/* Tarjeta compacta */
+.card { border: 2px solid var(--i2h-faint); background: var(--superficie); padding: 12px; display: grid; gap: 8px; }
+.card-title { font: 600 16px/1.3 var(--body); }
+.card-meta { font-size: 13px; color: var(--i2h-muted); display: grid; gap: 2px; }
+.card-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 13px; color: var(--i2h-muted); }
+.card.is-vencida { border-color: var(--estado-rojo); }
+.card.is-completada { background: transparent; }
+.card.is-completada .card-title { color: var(--i2h-muted); }
+.bar { height: 4px; background: var(--i2h-faint); }
+.bar i { display: block; height: 100%; background: linear-gradient(90deg, #A46CFB, #5CF000); }
+.time { font: 900 24px/1 var(--display); color: var(--i2h-white); }
+.is-vencida .time { color: var(--estado-rojo); }
+
+/* Indicador: barra segmentada + leyenda con cifras */
+.meter { padding: 16px; border-bottom: 1px solid var(--i2h-hair); display: grid; gap: 12px; }
+.meter-bar { display: flex; height: 12px; gap: 2px; }
+.meter-bar i { display: block; }
+.meter-legend { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.meter-legend span { display: inline-flex; align-items: baseline; gap: 8px; font-size: 13px; color: var(--i2h-muted); }
+.meter-legend b { font: 900 28px/1 var(--display); color: var(--i2h-white); }
+.meter-legend .is-vencida b { color: var(--estado-rojo); }
+
+/* Pestañas del celular: subrayado lima de 4 px en la activa */
+.tabs { display: flex; gap: 4px; overflow-x: auto; border-bottom: 1px solid var(--i2h-faint); padding: 0 16px; }
+.tab { flex: none; min-height: 48px; padding: 0 12px; background: none; border: 0; border-bottom: 4px solid transparent; font: 600 14px/1 var(--body); color: var(--i2h-muted); cursor: pointer; }
+.tab[aria-selected="true"] { color: var(--i2h-white); border-bottom-color: var(--i2h-lime); }
+.tab .n { margin-left: 6px; }
+
+/* Checklist compacto */
+.check { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 6px 12px; border: 2px solid var(--i2h-faint); margin-top: -2px; cursor: pointer; }
+.check input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.check .box { width: 22px; height: 22px; flex: none; border: 2px solid var(--borde-control); display: grid; place-items: center; }
+.check .box .ico { width: 14px; height: 14px; stroke: var(--i2h-ink); opacity: 0; }
+.check input:checked + .box { background: var(--i2h-lime); border-color: var(--i2h-lime); }
+.check input:checked + .box .ico { opacity: 1; }
+.check input:checked ~ .label { color: var(--i2h-muted); }
+.check input:focus-visible + .box { outline: 3px solid var(--i2h-white); outline-offset: 2px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 18px; border: 2px solid transparent; font: 600 15px/1 var(--body); cursor: pointer; transition: background 200ms var(--ease), color 200ms var(--ease); }
+.btn-primary { background: var(--i2h-purple); color: var(--i2h-ink); }
+.btn-primary:hover { background: var(--i2h-lime); }
+.btn-secondary { background: transparent; color: var(--i2h-purple); border-color: var(--i2h-purple); }
+.btn-secondary:hover { background: var(--i2h-purple); color: var(--i2h-ink); }
+.btn[disabled] { background: transparent; color: var(--i2h-muted); border: 2px dashed var(--borde-control); cursor: not-allowed; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.hint { font-size: 14px; color: var(--i2h-muted); }
+
+.field { display: grid; gap: 6px; }
+.field label { font: 600 14px/1.2 var(--body); }
+.field textarea { min-height: 88px; padding: 10px 12px; background: var(--superficie); border: 2px solid var(--borde-control); resize: vertical; font-size: 16px; }
+
+.notice { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border: 2px solid var(--i2h-faint); }
+.notice .ico { color: var(--i2h-lime); margin-top: 2px; }
+.notice.vencida { border-color: var(--estado-rojo); }
+.notice.vencida .ico { color: var(--estado-rojo); }
+.notice b { display: block; font-weight: 600; }
+.notice span { font-size: 14px; color: var(--i2h-muted); }
+.notices { display: grid; gap: 10px; max-width: 520px; }
+
+.screen-pad { padding: 16px; display: grid; gap: 10px; }
+.screen-h { font: 900 32px/0.95 var(--display); text-transform: uppercase; padding: 16px 16px 8px; }
+@media (max-width: 1100px) { .board { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .board { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2 21h20L12 3z"/><path d="M12 10v5M12 18h.01"/></symbol>
+  <symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M7 3v3l5 6 5-6V3M7 21v-3l5-6 5 6v3"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></symbol>
+</svg>
+
+<main class="tile">
+  <header class="tile-head">
+    <p class="kicker">Dirección 3 de 3 · Style tile</p>
+    <h1 class="tile-title">El pizarrón en <em>columnas</em></h1>
+    <p class="tile-lead">Un tablero de operaciones dividido por estado: cada columna es una parte del pizarrón. Tarjetas compactas con chips de punto y la barra de progreso morado → lima. En el celular, las columnas se vuelven pestañas.</p>
+    <div class="tile-words"><span>Bold</span><span>Calls-to-action</span><span>Understandable</span></div>
+  </header>
+
+  <section class="section">
+    <h2 class="section-title">Paleta</h2>
+    <p class="section-note">Misma base de marca. El color de estado vive en el borde superior de cada columna y en el punto del chip; el degradado morado → lima solo en el progreso.</p>
+    <div class="swatches">
+      <div class="swatch"><i style="background:#050307"></i><div><b>Negro</b><span>#050307 · fondo</span></div></div>
+      <div class="swatch"><i style="background:#0E0A14"></i><div><b>Superficie</b><span>#0E0A14 · tarjetas</span></div></div>
+      <div class="swatch"><i style="background:#A46CFB"></i><div><b>Morado</b><span>#A46CFB · acción</span></div></div>
+      <div class="swatch"><i style="background:#5CF000"></i><div><b>Lima</b><span>#5CF000 · en ejecución</span></div></div>
+      <div class="swatch"><i style="background:#FF6B6B"></i><div><b>Rojo</b><span>#FF6B6B · vencida</span></div></div>
+      <div class="swatch"><i style="background:linear-gradient(90deg,#A46CFB,#5CF000)"></i><div><b>Progreso</b><span>morado → lima</span></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Tipografía</h2>
+    <div class="type-row"><small>Big Shoulders 900 · 24</small><span style="font:900 24px/1 var(--display);text-transform:uppercase">En ejecución</span></div>
+    <div class="type-row"><small>Sora 600 · 16</small><span style="font:600 16px/1.3 var(--body)">Check-in de participantes</span></div>
+    <div class="type-row"><small>Sora 400 · 13</small><span style="font-size:13px;color:var(--i2h-muted)">Hall principal · Ana Torres, Luis Mena</span></div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Insignias de estado</h2>
+    <p class="section-note">Chips del brandboard con punto de color (R8) y la marca «próxima a vencer» con borde ámbar (R16).</p>
+    <div class="chips">
+      <span class="chip no-asignada"><span class="dot"></span>No asignada</span>
+      <span class="chip pendiente"><span class="dot"></span>Pendiente</span>
+      <span class="chip ejecucion"><span class="dot"></span>En ejecución</span>
+      <span class="chip completada"><svg class="ico ico-sm"><use href="#i-check"/></svg>Completada</span>
+      <span class="chip vencida"><svg class="ico ico-sm"><use href="#i-alert"/></svg>Vencida</span>
+      <span class="chip proxima"><svg class="ico ico-sm"><use href="#i-hourglass"/></svg>Próxima a vencer</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Componentes</h2>
+    <div class="btn-row" style="margin-bottom:12px">
+      <button class="btn btn-primary">Confirmar ejecución</button>
+      <button class="btn btn-secondary">Guardar avance</button>
+      <button class="btn" disabled>Confirmar ejecución</button>
+    </div>
+    <p class="hint" style="margin-bottom:32px">Deshabilitado: «Faltan 3 pasos por marcar» (R11).</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px">
+      <div>
+        <div class="bar" style="margin-bottom:10px"><i style="width:40%"></i></div>
+        <p class="hint" style="margin-bottom:10px">2 de 5 pasos</p>
+        <label class="check"><input type="checkbox" checked><span class="box"><svg class="ico"><use href="#i-check"/></svg></span><span class="label">Recoger las listas impresas en coordinación</span></label>
+        <label class="check"><input type="checkbox" checked><span class="box"><svg class="ico"><use href="#i-check"/></svg></span><span class="label">Instalar 2 laptops en la mesa de registro</span></label>
+        <label class="check"><input type="checkbox"><span class="box"><svg class="ico"><use href="#i-check"/></svg></span><span class="label">Probar el lector de códigos QR</span></label>
+        <label class="check"><input type="checkbox"><span class="box"><svg class="ico"><use href="#i-check"/></svg></span><span class="label">Entregar una manilla a cada participante</span></label>
+        <label class="check"><input type="checkbox"><span class="box"><svg class="ico"><use href="#i-check"/></svg></span><span class="label">Reportar el total de asistentes</span></label>
+      </div>
+      <div style="display:grid;gap:24px;align-content:start">
+        <div class="field"><label for="obs3">Observaciones (opcional)</label><textarea id="obs3">Faltan 20 manillas, pedí más a coordinación.</textarea></div>
+        <div class="notices">
+          <div class="notice"><svg class="ico"><use href="#i-bell"/></svg><div><b>Nueva tarea: Check-in de participantes</b><span>Hall principal · vence hoy 10:00</span></div></div>
+          <div class="notice vencida"><svg class="ico"><use href="#i-alert"/></svg><div><b>Venció: Preparar sala de mentorías</b><span>Todavía puedes completarla.</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Pantallas</h2>
+    <div class="desk" style="margin-bottom:32px">
+      <div class="desk-bar"><span>Tablero de cumplimiento · Administrador</span></div>
+      <div class="meter">
+        <div class="meter-bar" aria-hidden="true">
+          <i style="flex:1;background:var(--estado-rojo)"></i>
+          <i style="flex:3;background:var(--i2h-lime)"></i>
+          <i style="flex:5;background:var(--i2h-white)"></i>
+          <i style="flex:2;background:var(--borde-control)"></i>
+          <i style="flex:12;background:var(--i2h-faint)"></i>
+        </div>
+        <div class="meter-legend">
+          <span class="is-vencida"><b>1</b>Vencidas</span>
+          <span><b>3</b>En ejecución</span>
+          <span><b>5</b>Pendientes</span>
+          <span><b>2</b>No asignadas</span>
+          <span><b>12</b>Completadas</span>
+        </div>
+      </div>
+      <div class="board">
+        <div class="col vencida">
+          <div class="col-h">Vencidas <small>1</small></div>
+          <div class="card is-vencida"><span class="card-title">Preparar sala de mentorías Reto 02</span><div class="card-meta"><span>Sala 3 · Edificio Galileo</span><span>Mateo Vela</span></div><div class="bar"><i style="width:33%"></i></div><div class="card-foot"><span>1 de 3</span><span class="time">08:30</span></div></div>
+        </div>
+        <div class="col ejecucion">
+          <div class="col-h">En ejecución <small>3</small></div>
+          <div class="card"><span class="chip proxima" style="justify-self:start"><svg class="ico ico-sm"><use href="#i-hourglass"/></svg>Próxima a vencer</span><span class="card-title">Check-in de participantes</span><div class="card-meta"><span>Hall principal</span><span>Ana Torres, Luis Mena</span></div><div class="bar"><i style="width:40%"></i></div><div class="card-foot"><span>2 de 5</span><span class="time">10:00</span></div></div>
+          <div class="card"><span class="card-title">Montar audio del teatro</span><div class="card-meta"><span>Teatro Calderón de la Barca</span><span>Mateo Vela</span></div><div class="bar"><i style="width:66%"></i></div><div class="card-foot"><span>4 de 6</span><span class="time">14:30</span></div></div>
+        </div>
+        <div class="col pendiente">
+          <div class="col-h">Pendientes <small>5</small></div>
+          <div class="card"><span class="card-title">Armar mesas para la noche de código</span><div class="card-meta"><span>Hall principal</span><span>Sofía Ruiz</span></div><div class="bar"><i style="width:0"></i></div><div class="card-foot"><span>0 de 4</span><span class="time">21:00</span></div></div>
+        </div>
+        <div class="col no-asignada">
+          <div class="col-h">No asignadas <small>2</small></div>
+          <div class="card"><span class="card-title">Revisar extensiones eléctricas</span><div class="card-meta"><span>Salas por reto</span><span>Sin responsables</span></div><button class="btn btn-secondary" style="min-height:44px">Asignar</button></div>
+        </div>
+        <div class="col completada">
+          <div class="col-h">Completadas <small>12</small></div>
+          <div class="card is-completada"><span class="card-title">Repartir kits de bienvenida</span><div class="card-meta"><span>Confirmó Sofía Ruiz, 09:42</span></div><div class="bar"><i style="width:100%"></i></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width:390px">
+      <div class="phone">
+        <div class="phone-bar"><span>9:41</span><span>Estudiante</span></div>
+        <h3 class="screen-h">Mis tareas</h3>
+        <div class="tabs" role="tablist">
+          <button class="tab" role="tab" aria-selected="false">Vencidas<span class="n">1</span></button>
+          <button class="tab" role="tab" aria-selected="true">En ejecución<span class="n">1</span></button>
+          <button class="tab" role="tab" aria-selected="false">Pendientes<span class="n">2</span></button>
+          <button class="tab" role="tab" aria-selected="false">Completadas<span class="n">4</span></button>
+        </div>
+        <div class="screen-pad">
+          <div class="card"><span class="chip proxima" style="justify-self:start"><svg class="ico ico-sm"><use href="#i-hourglass"/></svg>Próxima a vencer</span><span class="card-title">Check-in de participantes</span><div class="card-meta"><span>Hall principal</span><span>Con Luis Mena</span></div><div class="bar"><i style="width:40%"></i></div><div class="card-foot"><span>2 de 5 pasos</span><span class="time">10:00</span></div></div>
+          <button class="btn btn-primary" style="width:100%">Continuar check-in</button>
+        </div>
+      </div>
+      <p class="caption">«Mis tareas» en el celular: una pestaña por estado, la activa con subrayado lima.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Qué gana y qué arriesga</h2>
+    <p class="section-note"><b>Gana:</b> el administrador ve todo el evento de un vistazo y compara columnas; las cifras y el progreso son muy claros. <b>Arriesga:</b> es la más densa y la menos «bold»; cinco columnas no caben en una laptop pequeña sin bajar a tres; en el celular, las pestañas esconden las vencidas detrás de un toque, justo lo que P-14 pide mostrar con prioridad.</p>
+  </section>
+</main>
+</body>
+</html>

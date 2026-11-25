@@ -7,7 +7,7 @@ Este documento describe **qué** debe hacer la herramienta y **qué no**. No des
 
 ## 1. Problema y contexto
 
-Durante el Interact2Hack 2027 (19–21 de febrero de 2027, Campus Cumbayá de la USFQ, según el brandboard del evento), el staff tiene que saber qué hacer, dónde y hasta cuándo. Los administradores, por su parte, tienen que saber en cualquier momento qué tareas ya se cumplieron, cuáles están en curso y cuáles se atrasaron.
+Durante el evento Interact2Hack 2027, el staff tiene que saber qué hacer, dónde y hasta cuándo. Los administradores, por su parte, tienen que saber en cualquier momento qué tareas ya se cumplieron, cuáles están en curso y cuáles se atrasaron.
 
 La herramienta convierte cada tarea en un checklist paso a paso, con fecha y hora de vencimiento, lugar y uno o varios responsables. Una tarea queda ejecutada cuando todos sus pasos están marcados y un responsable confirma su ejecución.
 

@@ -53,7 +53,6 @@ Los avisos los pidió el cliente (P-13). Van en Should porque la herramienta cum
 - Notificaciones fuera de la herramienta: correo, mensajería o push (P-13). El único correo que envía la herramienta es el de recuperación de contraseña (P-02).
 - Borrar tareas para siempre: se archivan (P-17).
 - Ver o restaurar tareas archivadas `[SUPUESTO S-10]`.
-- Reabrir una tarea completada `[SUPUESTO S-08]`.
 - Registro de usuarios por su cuenta.
 - Usuarios con más de un perfil (P-05).
 - Usuario master o super administrador (A-01).
@@ -76,9 +75,9 @@ Los avisos los pidió el cliente (P-13). Van en Should porque la herramienta cum
 | R11 | Una tarea solo se puede confirmar con **todos sus pasos marcados**. La confirma cualquiera de sus responsables, sin aprobación de un administrador, y queda completada para todos. Se registra quién la confirmó y cuándo `[SUPUESTO S-05]`. |
 | R12 | Un responsable puede **guardar** los pasos marcados y las observaciones sin confirmar la tarea. Si guarda con todos los pasos marcados, la herramienta le pregunta si quiere confirmar la ejecución `[SUPUESTO S-04]`. |
 | R13 | Las **observaciones son opcionales** y no impiden confirmar una tarea. Hay un solo campo de observaciones por tarea, compartido por sus responsables `[SUPUESTO S-06]`. |
-| R14 | Una tarea completada no se puede desmarcar, editar ni reabrir; solo se puede archivar `[SUPUESTO S-08]`. |
+| R14 | Un administrador puede reagendar una tarea completada o vencida fijando una nueva fecha y hora de vencimiento. Se conservan el avance y la confirmación registrada. Una tarea completada conserva su estado. Una tarea vencida se recalcula según R9 con el nuevo vencimiento. |
 | R15 | Una tarea **vencida no desaparece**: se muestra con prioridad alta y sus responsables todavía la pueden completar `[SUPUESTO S-07]`. Al confirmarla pasa a Completada. |
-| R16 | El tablero muestra la marca **«próxima a vencer»** en las tareas No asignadas, Pendientes o En ejecución que estén dentro del umbral previo al vencimiento. El umbral queda por confirmar (S-09). |
+| R16 | El tablero muestra la marca **«próxima a vencer»** en las tareas No asignadas, Pendientes o En ejecución cuando faltan 30 minutos o menos y el plazo aún no ha vencido. |
 | R17 | **Eliminar una tarea la archiva**: deja de verse en el tablero y en las listas de los estudiantes, y su información se conserva. Una tarea archivada no se puede restaurar en esta versión `[SUPUESTO S-10]`. |
 | R18 | Un estudiante solo ve las tareas no archivadas en las que es responsable, pendientes y completadas, separadas por estado y en el mismo orden que el tablero `[SUPUESTO S-13]`. En cada tarea suya ve también a los demás responsables. |
 | R19 | **Solo los administradores ven el tablero.** Muestra todas las tareas no archivadas como tarjetas, separadas por estado en este orden: **Vencidas, En ejecución, Pendientes, No asignadas, Completadas** `[SUPUESTO S-11]`. |
@@ -106,7 +105,7 @@ Los avisos los pidió el cliente (P-13). Van en Should porque la herramienta cum
 | S-01 | Un administrador no crea, edita ni elimina a otros administradores desde la herramienta (R2). | A-01 elimina el usuario master que pedía P-02 y dice que los administradores vienen creados de antemano, pero no si un administrador puede gestionar a otros. Lo limitamos para que ningún administrador pueda dejar al sistema sin administradores. | ¿Un administrador puede crear, editar o eliminar a otros administradores desde la herramienta, o esa lista es fija? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-02 | Título, fecha y hora, lugar y al menos un paso son obligatorios; los responsables no (R6). | Una tarea sin pasos no se puede completar (P-06), y existe el estado «No asignado» (P-15), así que se puede crear sin responsables. | ¿Hay algún dato de la tarea que pueda quedar vacío? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-03 | El orden de condiciones que decide el estado (R9). | El cliente nombró los cinco estados (P-15) pero no cuándo se pasa de uno a otro. | ¿Una tarea pasa a «En ejecución» cuando se marca el primer paso, o cuando el estudiante indica que empezó? | `[SUPUESTO]` · validar en el Avance 3 |
-| S-04 | Guardar con todos los pasos marcados pregunta si se confirma la ejecución (R12). | La descripción tiene un solo botón de guardar, y la confirmación no se puede deshacer (S-08). | ¿Guardar con todo marcado debe completar la tarea, o completar es una acción aparte? | `[SUPUESTO]` · validar en el Avance 3 |
+| S-04 | Guardar con todos los pasos marcados pregunta si se confirma la ejecución (R12). | La descripción tiene un solo botón de guardar. La pregunta permite elegir cuándo confirmar la ejecución. | ¿Guardar con todo marcado debe completar la tarea, o completar es una acción aparte? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-05 | Se registra quién confirmó la tarea y cuándo (R11). | Con un checklist compartido (P-07), el administrador necesita saber quién la cerró. El historial completo de cambios es un extra (P-16). | ¿Necesitan ver quién completó cada tarea? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-06 | Un solo campo de observaciones por tarea, compartido (R13). | El checklist es uno solo para todos (P-07); seguimos la misma lógica. | ¿Cada responsable escribe sus propias observaciones o son unas solas para la tarea? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-07 | Una tarea vencida se puede seguir completando (R15). | El cliente dijo que «no desaparece» (P-14), pero no si se puede completar. Bloquearla impediría terminar trabajo atrasado. | ¿Una tarea vencida se puede completar? ¿Debe quedar marcada como completada con retraso? | `[SUPUESTO]` · validar en el Avance 3 |
@@ -146,9 +145,9 @@ Los avisos los pidió el cliente (P-13). Van en Should porque la herramienta cum
 | R11 | P-06, P-07 (clave), P-08 y S-05 |
 | R12 | Descripción («el botón de guardar») y S-04 |
 | R13 | P-01 y S-06 |
-| R14 | S-08 |
+| R14 | Decisión del equipo sobre reagendar tareas completadas o vencidas |
 | R15 | P-14 y S-07 |
-| R16 | Descripción («tareas próximas a vencer») y S-09 |
+| R16 | Descripción («tareas próximas a vencer») y decisión del equipo sobre el umbral de 30 minutos |
 | R17 | P-17 y S-10. La descripción dice «eliminar tareas»; manda la respuesta del cliente: se archivan. |
 | R18 | Descripción («ver lista de tareas asignadas»), P-03 y S-13 |
 | R19 | P-04, P-04 (clave) y S-11 |

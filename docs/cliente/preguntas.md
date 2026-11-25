@@ -15,7 +15,7 @@ Estado del supuesto: **confirmado** (el cliente dijo lo mismo), **descartado** (
 | ID | Tema | Pregunta | Importancia | Supuesto | Prioridad | Respuesta del cliente | Estado del supuesto |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | P-01 | Tareas y checklist | ¿Las observaciones son necesarias para que se pueda completar una tarea? | Define el flujo de estados de la tarea y si las observaciones son opcionales u obligatorias para cerrarla. | Las observaciones son opcionales y no bloquean que el staff marque la tarea como completada. | Media | «Es opcional» | Confirmado |
-| P-02 | Usuarios y perfiles | ¿Quién gestiona los usuarios administrativos? | Determina quién tiene permisos para crear cuentas administrativas y cómo se controla el acceso al sistema. | Existe una lista previa de usuarios administrativos que se crean directamente en la aplicación mediante un administrador principal. | Alta | «Crear un usuario master que tiene todos los permisos. Opción de reestablecer contraseña que te reinicie por correo» | Confirmado: el administrador principal es el «usuario master». Se agrega la recuperación de contraseña por correo. Qué puede hacer el master que no pueda otro administrador queda pendiente. |
+| P-02 | Usuarios y perfiles | ¿Quién gestiona los usuarios administrativos? | Determina quién tiene permisos para crear cuentas administrativas y cómo se controla el acceso al sistema. | Existe una lista previa de usuarios administrativos que se crean directamente en la aplicación mediante un administrador principal. | Alta | «Crear un usuario master que tiene todos los permisos. Opción de reestablecer contraseña que te reinicie por correo» | Confirmado: el administrador principal es el «usuario master». Se agrega la recuperación de contraseña por correo. Qué puede hacer el master que no pueda otro administrador queda pendiente. **Corregido por A-01:** no hay usuario master; la recuperación por correo se mantiene. |
 | P-03 | Tareas y checklist | ¿Un miembro del staff puede ver sus tareas completadas? | Define qué información se muestra al staff y si se necesita un historial de tareas completadas en su vista. | El staff puede visualizar tanto sus tareas pendientes como las completadas, mientras que los administradores pueden consultar las tareas de todos los usuarios. | Baja | «Si puede ver» | Confirmado |
 | P-04 | Tablero | ¿Cuál es el criterio para que una tarea se muestre en el tablero? | Aclara qué tareas deben aparecer en el tablero y permite definir los criterios de filtrado y visualización. | El tablero muestra las tareas del día actual. | Alta | «Se muestran las n tareas, ordenadas por: vencidas, ordenadas por orden de vencimiento, en ejecución, sin asignar, completadas» (ver también la respuesta en Preguntas clave) | Descartado: no son solo las del día. El orden no menciona las pendientes y no queda claro cuántas son «n». |
 | P-05 | Usuarios y perfiles | ¿Un usuario puede tener múltiples roles (staff y admin)? | Define la estructura de roles, permisos y restricciones de acceso para cada usuario. | Cada usuario tiene un único rol asignado: administrador o staff. | Media | «No» | Confirmado |
@@ -46,3 +46,11 @@ Estado del supuesto: **confirmado** (el cliente dijo lo mismo), **descartado** (
 
 - «Se debe mantener la identidad visual del Interact2Hack»
 - «Campos de tarea: categorías no son relevantes»
+
+## 5. Aclaraciones del profesor
+
+Decisiones que dio el profesor después de la sesión con el cliente. Cuando contradicen una respuesta del cliente, manda la aclaración y se indica qué respuesta corrige.
+
+| ID | Fecha | Tema | Aclaración | Corrige a |
+| --- | --- | --- | --- | --- |
+| A-01 | _por completar_ | Usuarios y perfiles | No va a haber super administrador; solo existen los dos roles (admin y staff). Preferiblemente, los usuarios administradores ya deben estar predefinidos y creados de antemano. | P-02 (el «usuario master») |

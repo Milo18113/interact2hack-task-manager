@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brand board · Señal de staff · Interact2Hack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=Sora:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   BRAND BOARD · SEÑAL DE STAFF v1.0
+   Generado desde DESIGN.md. Si algo no coincide, manda DESIGN.md.
+   Tokens copiados de DESIGN.md §5: ningún otro color ni fuente aparece
+   en esta página.
+   ===================================================================== */
+:root {
+  /* §5.1 Color: base */
+  --color-fondo: #050307;
+  --color-superficie: #0E0A14;
+  --color-superficie-hover: rgba(164, 108, 251, 0.08);
+  --color-texto: #FFFFFF;
+  --color-texto-suave: rgba(255, 255, 255, 0.64);
+  --color-borde: rgba(255, 255, 255, 0.14);
+  --color-borde-control: rgba(255, 255, 255, 0.40);
+  --color-accion: #A46CFB;
+  --color-sobre-accion: #0B0612;
+  --color-ahora: #5CF000;
+  --color-foco: #5CF000;
+  --color-foco-sobre-accion: #0B0612;
+  --degradado-progreso: linear-gradient(90deg, var(--color-accion), var(--color-ahora));
+
+  /* §5.2 Color: estados de una tarea */
+  --color-no-asignada: rgba(255, 255, 255, 0.64);
+  --color-pendiente: #FFFFFF;
+  --color-ejecucion: #5CF000;
+  --color-completada: rgba(255, 255, 255, 0.14);
+  --color-vencida: #FF6B6B;
+  --color-proxima: #FFC857;
+
+  /* §5.3 Tipografía */
+  --fuente-display: "Big Shoulders Display", "Arial Narrow", sans-serif;
+  --fuente-texto: "Sora", "Segoe UI", sans-serif;
+
+  /* §5.4 Espaciado, radios y bordes */
+  --espacio-1: 4px; --espacio-2: 8px; --espacio-3: 12px; --espacio-4: 16px;
+  --espacio-5: 24px; --espacio-6: 32px; --espacio-7: 48px; --espacio-8: 64px;
+  --radio: 0;
+  --radio-circulo: 50%;
+  --borde-componente: 2px;
+  --borde-fino: 1px;
+  --borde-paso: 3px;
+  --borde-aviso: 6px;
+  --alto-progreso: 4px;
+  --alto-tactil: 44px;
+  --sombra-flotante: 0 18px 60px rgba(0, 0, 0, 0.6);
+
+  /* §5.5 Movimiento */
+  --duracion-ui: 200ms;
+  --curva: cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (prefers-reduced-motion: reduce) { :root { --duracion-ui: 0ms; } }
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--color-fondo); color: var(--color-texto); font: 400 16px/1.6 var(--fuente-texto); }
+h1, h2, h3, h4, p, ul, ol { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button, input, textarea { font: inherit; color: inherit; border-radius: var(--radio); }
+:focus-visible { outline: 3px solid var(--color-foco); outline-offset: 2px; }
+.ico { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.ico-sm { width: 16px; height: 16px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Niveles tipográficos (§5.3) */
+.t-cifra { font: 900 64px/0.85 var(--fuente-display); text-transform: uppercase; }
+.t-pantalla { font: 900 40px/0.9 var(--fuente-display); text-transform: uppercase; }
+.t-senal { font: 900 36px/0.92 var(--fuente-display); text-transform: uppercase; }
+.t-hora { font: 900 32px/1 var(--fuente-display); text-transform: uppercase; }
+.t-tarea { font: 900 28px/0.95 var(--fuente-display); text-transform: uppercase; }
+.t-aviso { font: 900 24px/1 var(--fuente-display); text-transform: uppercase; }
+.t-base { font: 400 16px/1.6 var(--fuente-texto); }
+.t-boton { font: 600 15px/1 var(--fuente-texto); text-transform: uppercase; letter-spacing: 0.08em; }
+.t-meta { font: 400 14px/1.4 var(--fuente-texto); }
+.t-kicker { font: 600 12px/1.2 var(--fuente-texto); text-transform: uppercase; letter-spacing: 0.2em; }
+.t-insignia { font: 600 12px/1 var(--fuente-texto); text-transform: uppercase; letter-spacing: 0.14em; }
+
+/* ---------- Marco del brand board ---------- */
+.board { max-width: 1200px; margin: 0 auto; padding: var(--espacio-7) var(--espacio-6) var(--espacio-8); }
+.board-head { display: grid; gap: var(--espacio-3); padding-bottom: var(--espacio-6); border-bottom: var(--borde-fino) solid var(--color-borde); margin-bottom: var(--espacio-7); }
+.board-head .t-kicker { color: var(--color-accion); }
+.board-title { font: 900 clamp(44px, 7vw, 72px)/0.92 var(--fuente-display); text-transform: uppercase; }
+.board-title em { font-style: normal; color: var(--color-ahora); }
+.board-lead { max-width: 64ch; color: var(--color-texto-suave); }
+.seccion { margin-bottom: var(--espacio-8); }
+.seccion > h2 { font: 900 40px/0.95 var(--fuente-display); text-transform: uppercase; margin-bottom: var(--espacio-2); }
+.seccion > .nota { color: var(--color-texto-suave); font-size: 14px; max-width: 70ch; margin-bottom: var(--espacio-5); }
+.sub { font: 600 12px/1.2 var(--fuente-texto); text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-accion); margin: var(--espacio-6) 0 var(--espacio-3); }
+.ref { color: var(--color-texto-suave); font-size: 13px; }
+.muestra-fila { display: flex; flex-wrap: wrap; gap: var(--espacio-4); align-items: flex-start; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: var(--espacio-5); align-items: start; }
+
+/* Paleta */
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: var(--espacio-3); }
+.swatch { border: var(--borde-fino) solid var(--color-borde); }
+.swatch i { display: block; height: 72px; border-bottom: var(--borde-fino) solid var(--color-borde); }
+.swatch div { padding: var(--espacio-3); font-size: 13px; line-height: 1.45; }
+.swatch b { display: block; font-weight: 600; font-size: 14px; }
+.swatch code { color: var(--color-texto); font-size: 12px; }
+.swatch span { display: block; color: var(--color-texto-suave); }
+
+/* Tipografía */
+.tipo-fila { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: var(--espacio-4); align-items: baseline; padding: var(--espacio-3) 0; border-top: var(--borde-fino) solid var(--color-borde); }
+.tipo-fila small { color: var(--color-texto-suave); font-size: 13px; }
+
+/* Espaciado */
+.escala { display: flex; flex-wrap: wrap; gap: var(--espacio-4); align-items: flex-end; }
+.escala div { display: grid; gap: var(--espacio-2); justify-items: start; font-size: 12px; color: var(--color-texto-suave); }
+.escala i { display: block; background: var(--color-accion); }
+
+/* ---------- 7.1 Botón ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--espacio-2); min-height: 52px; padding: 0 var(--espacio-5); border: var(--borde-componente) solid transparent; font: 600 15px/1 var(--fuente-texto); text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; transition: background var(--duracion-ui) var(--curva), color var(--duracion-ui) var(--curva); }
+.btn-primario { background: var(--color-accion); color: var(--color-sobre-accion); }
+.btn-primario:hover { background: var(--color-ahora); }
+.btn-secundario { background: transparent; color: var(--color-accion); border-color: var(--color-accion); }
+.btn-secundario:hover { background: var(--color-accion); color: var(--color-sobre-accion); }
+.btn-sobre-morado { background: var(--color-sobre-accion); color: var(--color-texto); }
+.btn-sobre-morado:hover { color: var(--color-ahora); }
+.btn-peligro { background: transparent; color: var(--color-vencida); border-color: var(--color-vencida); }
+.btn-peligro:hover { background: var(--color-vencida); color: var(--color-sobre-accion); }
+.btn[aria-disabled="true"] { background: transparent; color: var(--color-texto-suave); border: var(--borde-componente) dashed var(--color-borde-control); cursor: not-allowed; }
+.btn-ancho { width: 100%; }
+.ayuda { font-size: 14px; color: var(--color-texto-suave); }
+.bloque-morado { background: var(--color-accion); padding: var(--espacio-4); display: inline-flex; }
+.bloque-morado :focus-visible, .novedades :focus-visible { outline-color: var(--color-foco-sobre-accion); }
+
+/* ---------- 7.3 Insignia de estado ---------- */
+.insignia { display: inline-flex; flex-wrap: wrap; align-items: center; column-gap: 6px; row-gap: 2px; padding: 6px 10px; border: var(--borde-componente) solid transparent; font: 600 12px/1 var(--fuente-texto); text-transform: uppercase; letter-spacing: 0.14em; }
+.insignia .parte { white-space: nowrap; }
+.insignia.no-asignada { border-style: dashed; border-color: var(--color-borde-control); color: var(--color-no-asignada); }
+.insignia.pendiente { border-color: var(--color-pendiente); color: var(--color-pendiente); }
+.insignia.ejecucion { background: var(--color-ejecucion); color: var(--color-sobre-accion); }
+.insignia.completada { background: var(--color-completada); color: var(--color-texto); }
+.insignia.vencida { background: var(--color-vencida); color: var(--color-sobre-accion); }
+.insignia.proxima { background: var(--color-proxima); color: var(--color-sobre-accion); }
+.estrecho { width: 150px; border: var(--borde-fino) dashed var(--color-borde); padding: var(--espacio-2); }
+
+/* ---------- 7.4 Franja de tarea ---------- */
+.franjas { display: grid; gap: var(--espacio-3); }
+.franja { position: relative; display: grid; gap: var(--espacio-3); padding: var(--espacio-4) 52px var(--espacio-4) var(--espacio-4); background: var(--color-superficie); border-top: var(--borde-componente) solid var(--color-borde-control); border-bottom: var(--borde-componente) solid var(--color-borde-control); color: inherit; text-decoration: none; transition: background var(--duracion-ui) var(--curva); }
+.franja::after { content: '›'; position: absolute; right: var(--espacio-4); top: 50%; transform: translateY(-50%); font: 400 28px/1 var(--fuente-texto); color: var(--color-texto-suave); transition: color var(--duracion-ui) var(--curva); }
+.franja:hover { background: var(--color-superficie-hover); }
+.franja:hover::after { color: var(--color-accion); }
+.franja-insignias { display: flex; flex-wrap: wrap; gap: var(--espacio-2); }
+.franja-titulo { font: 900 28px/0.95 var(--fuente-display); text-transform: uppercase; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.franja-meta { display: grid; gap: var(--espacio-1); font-size: 14px; line-height: 1.4; color: var(--color-texto-suave); }
+.franja-meta span { display: inline-flex; gap: 6px; align-items: center; }
+.barra { height: var(--alto-progreso); background: var(--color-borde); }
+.barra i { display: block; height: 100%; background: var(--degradado-progreso); }
+.franja-vence { display: flex; justify-content: space-between; align-items: baseline; gap: var(--espacio-3); }
+.franja-vence span { font-size: 14px; color: var(--color-texto-suave); }
+.franja-vence b { font: 900 32px/1 var(--fuente-display); }
+.franja.is-vencida { border-color: var(--color-vencida); }
+.franja.is-vencida .franja-vence b { color: var(--color-vencida); }
+.franja.is-completada { background: transparent; }
+.franja.is-completada .franja-titulo, .franja.is-completada .franja-vence b { color: var(--color-texto-suave); }
+.franja.is-completada .barra i { background: var(--color-borde); }
+
+/* ---------- 7.5 Ítem de checklist ---------- */
+.avance { font: 600 14px/1 var(--fuente-texto); color: var(--color-texto-suave); margin-bottom: var(--espacio-3); }
+.paso { display: grid; grid-template-columns: 44px minmax(0, 1fr) 28px; gap: var(--espacio-3); align-items: center; min-height: 60px; padding: var(--espacio-2) 0; border-top: var(--borde-paso) solid var(--color-accion); cursor: pointer; }
+.paso .n { font: 900 28px/1 var(--fuente-display); color: var(--color-accion); }
+.paso input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.paso .caja { width: 28px; height: 28px; border: var(--borde-componente) solid var(--color-borde-control); display: grid; place-items: center; transition: background var(--duracion-ui) var(--curva); }
+.paso .caja .ico { width: 18px; height: 18px; stroke: var(--color-sobre-accion); opacity: 0; }
+.paso input:focus-visible ~ .caja { outline: 3px solid var(--color-foco); outline-offset: 2px; }
+.paso:has(input:checked) { border-top-color: var(--color-borde); }
+.paso:has(input:checked) .n, .paso:has(input:checked) .texto { color: var(--color-texto-suave); }
+.paso:has(input:checked) .texto { text-decoration: line-through; }
+.paso input:checked ~ .caja { background: var(--color-texto); border-color: var(--color-texto); }
+.paso input:checked ~ .caja .ico { opacity: 1; }
+
+/* ---------- 7.2 Campo de formulario ---------- */
+.campo { display: grid; gap: var(--espacio-2); }
+.campo label { font: 600 12px/1.2 var(--fuente-texto); text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-accion); }
+.campo input, .campo textarea { min-height: var(--alto-tactil); padding: var(--espacio-3); background: var(--color-superficie); border: var(--borde-componente) solid var(--color-borde-control); font-size: 16px; }
+.campo textarea { min-height: 96px; resize: vertical; }
+.campo input::placeholder, .campo textarea::placeholder { color: var(--color-texto-suave); opacity: 1; }
+.campo small { font-size: 14px; color: var(--color-texto-suave); }
+.campo.con-error input { border-color: var(--color-vencida); }
+.campo.con-error small { color: var(--color-vencida); }
+
+/* ---------- 7.7 Aviso ---------- */
+.avisos { display: grid; gap: var(--espacio-3); }
+.aviso { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--espacio-1) var(--espacio-3); padding: var(--espacio-4); background: var(--color-superficie); border-left: var(--borde-aviso) solid var(--tono); }
+.aviso .ico { color: var(--tono); margin-top: 2px; }
+.aviso b { font: 900 24px/1 var(--fuente-display); text-transform: uppercase; }
+.aviso p { grid-column: 2; font-size: 14px; line-height: 1.4; color: var(--color-texto-suave); }
+.aviso.nueva, .aviso.hecho { --tono: var(--color-ejecucion); }
+.aviso.proxima { --tono: var(--color-proxima); }
+.aviso.vencida { --tono: var(--color-vencida); }
+.aviso.cambio, .aviso.retiro { --tono: var(--color-accion); }
+.aviso.otro { --tono: var(--color-borde-control); }
+.aviso-hora { font-size: 14px; color: var(--color-texto-suave); margin: var(--espacio-4) 0 var(--espacio-2); }
+
+/* ---------- 7.8 Tarjeta de Novedades ---------- */
+.novedades { background: var(--color-accion); color: var(--color-sobre-accion); padding: var(--espacio-5) var(--espacio-4); display: grid; gap: var(--espacio-3); }
+.novedades ul { display: grid; gap: var(--espacio-1); font: 600 15px/1.4 var(--fuente-texto); }
+.novedades .btn { justify-self: start; }
+
+/* ---------- 7.9 Campana y contador ---------- */
+.campana { position: relative; display: inline-grid; place-items: center; width: var(--alto-tactil); height: var(--alto-tactil); background: none; border: 0; color: var(--color-texto); cursor: pointer; }
+.campana .ico { width: 24px; height: 24px; }
+.contador { position: absolute; top: 2px; right: 0; min-width: 20px; height: 20px; padding: 0 5px; display: grid; place-items: center; border-radius: var(--radio-circulo); background: var(--color-ahora); color: var(--color-sobre-accion); font: 600 12px/1 var(--fuente-texto); }
+
+/* ---------- 7.11 Indicador del tablero ---------- */
+.indicador { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--espacio-3); }
+.indicador div { border: var(--borde-componente) solid var(--color-borde); padding: var(--espacio-4); display: grid; gap: var(--espacio-2); }
+.indicador b { font: 900 64px/0.85 var(--fuente-display); }
+.indicador span { font: 600 12px/1.2 var(--fuente-texto); text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-texto-suave); }
+.indicador .con-vencidas { background: var(--color-vencida); border-color: var(--color-vencida); color: var(--color-sobre-accion); }
+.indicador .con-vencidas span { color: var(--color-sobre-accion); }
+
+/* ---------- 7.12 Editor de pasos · 7.13 Selector · 7.14 Fila de estudiante ---------- */
+.editor-paso { display: grid; grid-template-columns: 44px minmax(0, 1fr) var(--alto-tactil); gap: var(--espacio-3); align-items: center; margin-bottom: var(--espacio-2); }
+.editor-paso .n { font: 900 28px/1 var(--fuente-display); color: var(--color-accion); }
+.editor-paso input { min-height: var(--alto-tactil); padding: 0 var(--espacio-3); background: var(--color-superficie); border: var(--borde-componente) solid var(--color-borde-control); font-size: 16px; min-width: 0; }
+.quitar { width: var(--alto-tactil); height: var(--alto-tactil); display: grid; place-items: center; background: none; border: var(--borde-componente) solid var(--color-borde-control); color: var(--color-texto); cursor: pointer; }
+.chips { display: flex; flex-wrap: wrap; gap: var(--espacio-2); margin-bottom: var(--espacio-3); }
+.chip { display: inline-flex; align-items: center; gap: var(--espacio-2); min-height: var(--alto-tactil); padding: 0 var(--espacio-2) 0 var(--espacio-3); border: var(--borde-componente) solid var(--color-borde); font: 600 13px/1 var(--fuente-texto); }
+.chip button { width: 32px; height: 32px; display: grid; place-items: center; background: none; border: 0; color: var(--color-texto-suave); cursor: pointer; }
+.opcion { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: var(--espacio-3); align-items: center; min-height: 52px; padding: var(--espacio-2) 0; border-top: var(--borde-fino) solid var(--color-borde); cursor: pointer; }
+.opcion input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.opcion .caja { width: 28px; height: 28px; border: var(--borde-componente) solid var(--color-borde-control); display: grid; place-items: center; }
+.opcion .caja .ico { width: 18px; height: 18px; stroke: var(--color-sobre-accion); opacity: 0; }
+.opcion input:checked + .caja { background: var(--color-texto); border-color: var(--color-texto); }
+.opcion input:checked + .caja .ico { opacity: 1; }
+.opcion input:focus-visible + .caja { outline: 3px solid var(--color-foco); outline-offset: 2px; }
+.opcion small { display: block; font-size: 14px; color: var(--color-texto-suave); }
+.estudiante { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--espacio-3); padding: var(--espacio-4); background: var(--color-superficie); border-bottom: var(--borde-fino) solid var(--color-borde); }
+.estudiante b { display: block; font-weight: 600; }
+.estudiante span { display: block; font-size: 14px; color: var(--color-texto-suave); }
+.estudiante .acciones { display: flex; flex-wrap: wrap; gap: var(--espacio-2); }
+
+/* ---------- 7.6 Diálogo de confirmación ---------- */
+.dialogo { background: var(--color-superficie); border-top: var(--borde-componente) solid var(--color-accion); box-shadow: var(--sombra-flotante); padding: var(--espacio-5) var(--espacio-4); display: grid; gap: var(--espacio-4); max-width: 520px; }
+.dialogo h4 { font: 900 32px/1 var(--fuente-display); text-transform: uppercase; }
+.dialogo p { color: var(--color-texto-suave); }
+.dialogo .acciones { display: flex; flex-wrap: wrap; gap: var(--espacio-3); }
+
+/* ---------- 7.15 Estados de pantalla ---------- */
+.esqueleto { height: 148px; background: var(--color-superficie); border-top: var(--borde-componente) solid var(--color-borde); border-bottom: var(--borde-componente) solid var(--color-borde); }
+.vacio { padding: var(--espacio-6) var(--espacio-4); border: var(--borde-componente) dashed var(--color-borde); color: var(--color-texto-suave); }
+
+/* ---------- Pantallas ---------- */
+.pantallas { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: var(--espacio-6); align-items: start; }
+.celular { width: 100%; max-width: 390px; border: var(--borde-componente) solid var(--color-borde); background: var(--color-fondo); }
+.barra-sistema { display: flex; justify-content: space-between; padding: var(--espacio-2) var(--espacio-4); font-size: 12px; color: var(--color-texto-suave); border-bottom: var(--borde-fino) solid var(--color-borde); }
+.encabezado { display: flex; justify-content: space-between; align-items: center; gap: var(--espacio-3); padding: var(--espacio-4) var(--espacio-4) var(--espacio-2); }
+.cuerpo { padding: var(--espacio-2) var(--espacio-4) var(--espacio-5); display: grid; gap: var(--espacio-4); }
+.grupo { font: 600 12px/1.2 var(--fuente-texto); text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-accion); margin-top: var(--espacio-3); }
+/* En la app esta barra es fija al pie de la pantalla (DESIGN.md §7.6); en el brand board se dibuja al final del mock para no flotar sobre el resto de la página. */
+.barra-fija { padding: var(--espacio-3) var(--espacio-4); background: var(--color-fondo); border-top: var(--borde-fino) solid var(--color-borde); display: grid; gap: var(--espacio-2); }
+.detalle-meta { display: grid; gap: var(--espacio-2); font-size: 14px; color: var(--color-texto-suave); }
+.detalle-meta span { display: flex; gap: var(--espacio-2); align-items: center; }
+.leyenda { margin-top: var(--espacio-3); font-size: 13px; color: var(--color-texto-suave); }
+.escritorio { border: var(--borde-componente) solid var(--color-borde); background: var(--color-fondo); margin-top: var(--espacio-6); }
+.escritorio-cabeza { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--espacio-3); padding: var(--espacio-5) var(--espacio-6) var(--espacio-4); }
+.escritorio-cuerpo { padding: 0 var(--espacio-6) var(--espacio-6); display: grid; gap: var(--espacio-4); }
+.tablero-grupo { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--espacio-3); align-items: start; }
+
+/* Accesibilidad */
+.tabla { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tabla th, .tabla td { text-align: left; padding: var(--espacio-2) var(--espacio-3); border-bottom: var(--borde-fino) solid var(--color-borde); }
+.tabla th { font: 600 12px/1.2 var(--fuente-texto); text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-texto-suave); }
+.tabla-scroll { overflow-x: auto; }
+
+/* §6 Layout por ancho */
+@media (max-width: 1024px) {
+  .indicador { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .tablero-grupo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .board { padding: var(--espacio-6) var(--espacio-4) var(--espacio-7); }
+  .tipo-fila { grid-template-columns: minmax(0, 1fr); gap: var(--espacio-1); }
+  .indicador { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .indicador b { font-size: 44px; }
+  .tablero-grupo { grid-template-columns: minmax(0, 1fr); }
+  .escritorio-cabeza, .escritorio-cuerpo { padding-left: var(--espacio-4); padding-right: var(--espacio-4); }
+  .estudiante .acciones, .estudiante .acciones .btn { width: 100%; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-reloj" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
+  <symbol id="i-alerta" viewBox="0 0 24 24"><path d="M12 3 2 21h20L12 3z"/><path d="M12 10v5M12 18h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></symbol>
+  <symbol id="i-sin-persona" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/><path d="M3 3l18 18"/></symbol>
+  <symbol id="i-arena" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M7 3v3l5 6 5-6V3M7 21v-3l5-6 5 6v3"/></symbol>
+  <symbol id="i-lugar" viewBox="0 0 24 24"><path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+  <symbol id="i-campana" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></symbol>
+  <symbol id="i-personas" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2.5.5 4 2.5 4 5.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-mas" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+</svg>
+
+<main class="board">
+  <header class="board-head">
+    <p class="t-kicker">Brand board · Señal de staff v1.0 · noviembre 2026</p>
+    <h1 class="board-title">Organización del <em>staff</em> del Interact2Hack</h1>
+    <p class="board-lead">Generado desde <code>DESIGN.md</code>: si algo no coincide, manda el DESIGN.md. Extiende la identidad Señal Neón v1.0 a la herramienta del staff. Los datos son de ejemplo y están fijados al viernes 19 de febrero de 2027 a las 09:35; cumplen R16 (próxima a vencer a 30 minutos), R18 a R21 y R25.</p>
+  </header>
+
+  <!-- ============================== PALETA ============================== -->
+  <section class="seccion" aria-labelledby="s-paleta">
+    <h2 id="s-paleta">Paleta</h2>
+    <p class="nota">DESIGN.md §5.1 y §5.2. Negro, morado, lima y tinta vienen del brandboard; el rojo y el ámbar los decidió el equipo [SUPUESTO]. Contraste calculado sobre <code>--color-fondo</code> salvo que se indique otro fondo.</p>
+    <h3 class="sub">Base</h3>
+    <div class="swatches">
+      <div class="swatch"><i style="background:var(--color-fondo)"></i><div><b>Fondo</b><code>--color-fondo · #050307</code><span>Fondo de toda pantalla</span></div></div>
+      <div class="swatch"><i style="background:var(--color-superficie)"></i><div><b>Superficie</b><code>--color-superficie · #0E0A14</code><span>Franjas, avisos, campos</span></div></div>
+      <div class="swatch"><i style="background:var(--color-texto)"></i><div><b>Texto</b><code>--color-texto · #FFFFFF</code><span>20.54:1</span></div></div>
+      <div class="swatch"><i style="background:var(--color-texto-suave)"></i><div><b>Texto suave</b><code>--color-texto-suave · blanco 64 %</code><span>8.27:1 · metadatos, ayudas</span></div></div>
+      <div class="swatch"><i style="background:var(--color-borde-control)"></i><div><b>Borde de control</b><code>--color-borde-control · blanco 40 %</code><span>3.71:1 · campos, casillas, franjas</span></div></div>
+      <div class="swatch"><i style="background:var(--color-borde)"></i><div><b>Borde</b><code>--color-borde · blanco 14 %</code><span>1.37:1 · solo decorativo</span></div></div>
+      <div class="swatch"><i style="background:var(--color-accion)"></i><div><b>Acción</b><code>--color-accion · #A46CFB</code><span>5.98:1 · botón primario, Novedades</span></div></div>
+      <div class="swatch"><i style="background:var(--color-sobre-accion)"></i><div><b>Sobre acción (tinta)</b><code>--color-sobre-accion · #0B0612</code><span>5.83:1 sobre morado</span></div></div>
+      <div class="swatch"><i style="background:var(--color-ahora)"></i><div><b>Ahora · foco</b><code>--color-ahora · #5CF000</code><span>13.61:1 · contador, foco</span></div></div>
+      <div class="swatch"><i style="background:var(--degradado-progreso)"></i><div><b>Progreso</b><code>--degradado-progreso</code><span>Morado → lima, solo avance</span></div></div>
+    </div>
+    <h3 class="sub">Estados de una tarea (PRD R8 y R16)</h3>
+    <div class="swatches">
+      <div class="swatch"><i style="background:var(--color-fondo);border:var(--borde-componente) dashed var(--color-borde-control)"></i><div><b>No asignada</b><code>--color-no-asignada · blanco 64 %</code><span>Contorno punteado · 8.27:1</span></div></div>
+      <div class="swatch"><i style="background:var(--color-fondo);border:var(--borde-componente) solid var(--color-pendiente)"></i><div><b>Pendiente</b><code>--color-pendiente · #FFFFFF</code><span>Contorno · 20.54:1</span></div></div>
+      <div class="swatch"><i style="background:var(--color-ejecucion)"></i><div><b>En ejecución</b><code>--color-ejecucion · #5CF000</code><span>Relleno, texto tinta · 13.27:1</span></div></div>
+      <div class="swatch"><i style="background:var(--color-completada)"></i><div><b>Completada</b><code>--color-completada · blanco 14 %</code><span>Relleno, texto blanco · 13.66:1</span></div></div>
+      <div class="swatch"><i style="background:var(--color-vencida)"></i><div><b>Vencida [SUPUESTO]</b><code>--color-vencida · #FF6B6B</code><span>Relleno, texto tinta · 7.21:1</span></div></div>
+      <div class="swatch"><i style="background:var(--color-proxima)"></i><div><b>Próxima a vencer [SUPUESTO]</b><code>--color-proxima · #FFC857</code><span>Relleno, texto tinta · 13.01:1</span></div></div>
+    </div>
+  </section>
+
+  <!-- ============================== TIPOGRAFÍA ============================== -->
+  <section class="seccion" aria-labelledby="s-tipo">
+    <h2 id="s-tipo">Tipografía</h2>
+    <p class="nota">DESIGN.md §5.3. Big Shoulders Display 900, siempre en mayúsculas y nunca por debajo de 24 px; Sora 400 y 600 para leer.</p>
+    <div class="tipo-fila"><small>--texto-cifra · Display 64</small><span class="t-cifra">12</span></div>
+    <div class="tipo-fila"><small>--texto-pantalla · Display 40</small><span class="t-pantalla">Mis tareas</span></div>
+    <div class="tipo-fila"><small>--texto-senal · Display 36</small><span class="t-senal">5 novedades</span></div>
+    <div class="tipo-fila"><small>--texto-hora · Display 32</small><span class="t-hora">10:00</span></div>
+    <div class="tipo-fila"><small>--texto-tarea · Display 28</small><span class="t-tarea">Check-in de participantes</span></div>
+    <div class="tipo-fila"><small>--texto-aviso · Display 24</small><span class="t-aviso">Nueva tarea para ti</span></div>
+    <div class="tipo-fila"><small>--texto-base · Sora 400 · 16</small><span class="t-base">Instalar 2 laptops en la mesa de registro</span></div>
+    <div class="tipo-fila"><small>--texto-boton · Sora 600 · 15</small><span class="t-boton">Confirmar ejecución</span></div>
+    <div class="tipo-fila"><small>--texto-meta · Sora 400 · 14</small><span class="t-meta">Hall principal · Ana Torres, Luis Mena</span></div>
+    <div class="tipo-fila"><small>--texto-kicker · Sora 600 · 12</small><span class="t-kicker">Novedades</span></div>
+    <div class="tipo-fila"><small>--texto-insignia · Sora 600 · 12</small><span class="t-insignia">En ejecución</span></div>
+  </section>
+
+  <!-- ============================== ESPACIO ============================== -->
+  <section class="seccion" aria-labelledby="s-espacio">
+    <h2 id="s-espacio">Espacio, radios y movimiento</h2>
+    <p class="nota">DESIGN.md §5.4 y §5.5. Base de 4 px; radio 0 en todo salvo el contador y el punto de estado; 200 ms en la interfaz, 0 ms con movimiento reducido.</p>
+    <div class="escala">
+      <div><i style="width:4px;height:4px"></i>espacio-1 · 4</div>
+      <div><i style="width:8px;height:8px"></i>espacio-2 · 8</div>
+      <div><i style="width:12px;height:12px"></i>espacio-3 · 12</div>
+      <div><i style="width:16px;height:16px"></i>espacio-4 · 16</div>
+      <div><i style="width:24px;height:24px"></i>espacio-5 · 24</div>
+      <div><i style="width:32px;height:32px"></i>espacio-6 · 32</div>
+      <div><i style="width:48px;height:48px"></i>espacio-7 · 48</div>
+      <div><i style="width:64px;height:64px"></i>espacio-8 · 64</div>
+    </div>
+  </section>
+
+  <!-- ============================== COMPONENTES ============================== -->
+  <section class="seccion" aria-labelledby="s-comp">
+    <h2 id="s-comp">Componentes</h2>
+    <p class="nota">DESIGN.md §7. En esta sección se muestran varias variantes juntas; en una pantalla real hay como máximo un bloque sólido morado.</p>
+
+    <h3 class="sub">7.1 Botón</h3>
+    <div class="muestra-fila">
+      <button class="btn btn-primario" type="button">Confirmar ejecución</button>
+      <button class="btn btn-secundario" type="button">Guardar avance</button>
+      <button class="btn btn-peligro" type="button">Dar de baja</button>
+      <div class="bloque-morado"><button class="btn btn-sobre-morado" type="button">Entendido</button></div>
+    </div>
+    <div class="muestra-fila" style="margin-top:var(--espacio-4);align-items:center">
+      <button class="btn" type="button" aria-disabled="true" aria-describedby="ayuda-deshabilitado">Confirmar ejecución</button>
+      <p class="ayuda" id="ayuda-deshabilitado">Faltan 3 pasos por marcar.</p>
+    </div>
+    <p class="ref" style="margin-top:var(--espacio-2)">Primario · Secundario · Peligro · Sobre morado · Deshabilitado (aria-disabled, motivo con aria-describedby).</p>
+
+    <h3 class="sub">7.3 Insignia de estado</h3>
+    <div class="muestra-fila">
+      <span class="insignia no-asignada"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-sin-persona"/></svg>No asignada</span>
+      <span class="insignia pendiente"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-reloj"/></svg>Pendiente</span>
+      <span class="insignia ejecucion"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-play"/></svg>En ejecución</span>
+      <span class="insignia completada"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>Completada</span>
+      <span class="insignia vencida"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-alerta"/></svg>Vencida</span>
+      <span class="insignia proxima"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-arena"/></svg><span class="parte">Próxima:</span><span class="parte">25 min</span></span>
+    </div>
+    <div class="muestra-fila" style="margin-top:var(--espacio-4);align-items:center">
+      <div class="estrecho"><span class="insignia proxima"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-arena"/></svg><span class="parte">Próxima:</span><span class="parte">25 min</span></span></div>
+      <p class="ref">En un espacio estrecho, «25 min» baja entero a la línea siguiente; nunca se corta por dentro (H-05).</p>
+    </div>
+
+    <h3 class="sub">7.4 Franja de tarea · lista del estudiante</h3>
+    <div class="grid-auto">
+      <a class="franja" href="#pantallas">
+        <div class="franja-insignias"><span class="insignia pendiente"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-reloj"/></svg>Pendiente</span></div>
+        <span class="franja-titulo">Preparar el desayuno del sábado</span>
+        <div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Cafetería del campus</span><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-personas"/></svg>Ana Torres</span></div>
+        <div class="barra"><i style="width:0%"></i></div>
+        <div class="franja-vence"><span>Mañana</span><b>07:30</b></div>
+      </a>
+      <a class="franja" href="#pantallas">
+        <div class="franja-insignias"><span class="insignia ejecucion"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-play"/></svg>En ejecución</span><span class="insignia proxima"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-arena"/></svg><span class="parte">Próxima:</span><span class="parte">25 min</span></span></div>
+        <span class="franja-titulo">Check-in de participantes</span>
+        <div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Hall principal</span><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-personas"/></svg>Ana Torres, Luis Mena</span></div>
+        <div class="barra"><i style="width:40%"></i></div>
+        <div class="franja-vence"><span>Hoy</span><b>10:00</b></div>
+      </a>
+      <a class="franja is-completada" href="#pantallas">
+        <div class="franja-insignias"><span class="insignia completada"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>Completada</span></div>
+        <span class="franja-titulo">Repartir kits de bienvenida</span>
+        <div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>Confirmó Sofía Ruiz · 08:52</span></div>
+        <div class="barra"><i style="width:100%"></i></div>
+        <div class="franja-vence"><span>Hoy</span><b>09:00</b></div>
+      </a>
+      <a class="franja is-vencida" href="#pantallas">
+        <div class="franja-insignias"><span class="insignia vencida"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-alerta"/></svg>Vencida</span></div>
+        <span class="franja-titulo">Preparar la sala de mentorías del Reto 02</span>
+        <div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Sala 3 · Edificio Galileo</span><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-personas"/></svg>Mateo Vela, Ana Torres</span></div>
+        <div class="barra"><i style="width:33%"></i></div>
+        <div class="franja-vence"><span>Venció</span><b>08:30</b></div>
+      </a>
+    </div>
+    <p class="ref" style="margin-top:var(--espacio-3)">Pendiente · En ejecución con «Próxima: 25 min» · Completada · Vencida. Borde solo arriba y abajo; toda la franja es un enlace al detalle; fecha en palabras a la izquierda y hora a la derecha.</p>
+
+    <h3 class="sub">7.4 Franja de tarea · tablero del administrador</h3>
+    <div class="grid-auto">
+      <a class="franja" href="#tablero">
+        <div class="franja-insignias"><span class="insignia ejecucion"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-play"/></svg>En ejecución</span><span class="insignia proxima"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-arena"/></svg><span class="parte">Próxima:</span><span class="parte">25 min</span></span></div>
+        <span class="franja-titulo">Check-in de participantes</span>
+        <div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Hall principal</span><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-personas"/></svg>Ana Torres, Luis Mena</span></div>
+        <div class="barra"><i style="width:40%"></i></div>
+        <div class="franja-vence"><span>Hoy (2 de 5)</span><b>10:00</b></div>
+      </a>
+      <a class="franja" href="#tablero">
+        <div class="franja-insignias"><span class="insignia pendiente"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-reloj"/></svg>Pendiente</span></div>
+        <span class="franja-titulo">Desmontar la señalética del campus</span>
+        <div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Pasillos y accesos</span><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-personas"/></svg>Luis Mena, Sofía Ruiz</span></div>
+        <div class="barra"><i style="width:0%"></i></div>
+        <div class="franja-vence"><span>En 2 días (0 de 4)</span><b>18:00</b></div>
+      </a>
+    </div>
+
+    <h3 class="sub">7.5 Ítem de checklist · a medio completar</h3>
+    <div style="max-width:560px">
+      <p class="avance">2 de 5 pasos</p>
+      <div class="barra" style="margin-bottom:var(--espacio-3)"><i style="width:40%"></i></div>
+      <label class="paso"><span class="n">01</span><span class="texto">Recoger las listas impresas en coordinación</span><input type="checkbox" checked><span class="caja"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span></label>
+      <label class="paso"><span class="n">02</span><span class="texto">Instalar 2 laptops en la mesa de registro</span><input type="checkbox" checked><span class="caja"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span></label>
+      <label class="paso"><span class="n">03</span><span class="texto">Probar el lector de códigos QR</span><input type="checkbox"><span class="caja"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span></label>
+      <label class="paso"><span class="n">04</span><span class="texto">Entregar una manilla a cada participante</span><input type="checkbox"><span class="caja"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span></label>
+      <label class="paso"><span class="n">05</span><span class="texto">Reportar el total de asistentes</span><input type="checkbox"><span class="caja"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span></label>
+    </div>
+    <p class="ref" style="margin-top:var(--espacio-3)">Pendiente: borde superior y numeral morados. Completado: gris, tachado y casilla blanca (H-07). La fila completa se toca.</p>
+
+    <h3 class="sub">7.2 Campo de formulario</h3>
+    <div class="grid-auto">
+      <div class="campo">
+        <label for="obs">Observaciones · opcional</label>
+        <textarea id="obs" aria-describedby="obs-ayuda">Faltan 20 manillas, pedí más a coordinación.</textarea>
+        <small id="obs-ayuda">Las ven todos los responsables de la tarea.</small>
+      </div>
+      <div class="campo con-error">
+        <label for="lugar">Lugar o aula</label>
+        <input id="lugar" type="text" value="" aria-invalid="true" aria-describedby="lugar-error">
+        <small id="lugar-error">Escribe el lugar donde se hace la tarea.</small>
+      </div>
+    </div>
+
+    <h3 class="sub">7.7 Aviso</h3>
+    <div class="avisos" style="max-width:560px">
+      <div class="aviso nueva" role="status"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg><b>Nueva tarea para ti</b><p>«Preparar el desayuno del sábado» · Cafetería del campus · Mañana 07:30</p></div>
+      <div class="aviso proxima" role="status"><svg class="ico" aria-hidden="true"><use href="#i-arena"/></svg><b>Próxima a vencer</b><p>«Check-in de participantes» vence en 25 min · faltan 3 pasos</p></div>
+      <div class="aviso vencida" role="alert"><svg class="ico" aria-hidden="true"><use href="#i-alerta"/></svg><b>Tarea vencida</b><p>«Preparar la sala de mentorías del Reto 02» venció a las 08:30. Todavía puedes completarla.</p></div>
+      <div class="aviso cambio" role="status"><svg class="ico" aria-hidden="true"><use href="#i-reloj"/></svg><b>Cambió la hora</b><p>«Check-in de participantes» ahora vence hoy a las 10:00</p></div>
+      <div class="aviso retiro" role="status"><svg class="ico" aria-hidden="true"><use href="#i-sin-persona"/></svg><b>Ya no es tuya</b><p>Te retiraron de «Montar el audio del teatro»</p></div>
+      <div class="aviso otro" role="status"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><b>Completada por otra persona</b><p>Sofía Ruiz completó «Repartir kits de bienvenida» · 08:52</p></div>
+      <div class="aviso hecho" role="status"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><b>Completaste la tarea</b><p>«Check-in de participantes» · confirmada por ti a las 09:52</p></div>
+    </div>
+    <p class="ref" style="margin-top:var(--espacio-3)">El icono va siempre en el mismo color que el borde izquierdo.</p>
+
+    <h3 class="sub">7.8 Tarjeta de Novedades · 7.9 Campana y contador</h3>
+    <div class="grid-auto">
+      <section class="novedades" aria-labelledby="nov-titulo">
+        <p class="t-kicker">Novedades</p>
+        <h4 id="nov-titulo" class="t-senal">5 novedades</h4>
+        <ul>
+          <li>1 tarea nueva</li>
+          <li>1 completada por Sofía Ruiz</li>
+          <li>1 venció</li>
+          <li>1 cambió de hora o lugar</li>
+          <li>1 ya no es tuya</li>
+        </ul>
+        <button class="btn btn-sobre-morado" type="button">Entendido</button>
+      </section>
+      <div class="muestra-fila" style="align-items:center">
+        <button class="campana" type="button" aria-label="Avisos, 3 sin leer"><svg class="ico" aria-hidden="true"><use href="#i-campana"/></svg><span class="contador" aria-hidden="true">3</span></button>
+        <button class="campana" type="button" aria-label="Avisos, más de 9 sin leer"><svg class="ico" aria-hidden="true"><use href="#i-campana"/></svg><span class="contador" aria-hidden="true">9+</span></button>
+        <button class="campana" type="button" aria-label="Avisos"><svg class="ico" aria-hidden="true"><use href="#i-campana"/></svg></button>
+        <p class="ref">3 sin leer · más de 9 · ninguno. Solo estudiantes.</p>
+      </div>
+    </div>
+
+    <h3 class="sub">7.11 Indicador del tablero de cumplimiento</h3>
+    <div class="indicador">
+      <div class="con-vencidas"><b>1</b><span>Vencidas</span></div>
+      <div><b>2</b><span>En ejecución</span></div>
+      <div><b>3</b><span>Pendientes</span></div>
+      <div><b>1</b><span>No asignadas</span></div>
+      <div><b>1</b><span>Completadas</span></div>
+    </div>
+
+    <h3 class="sub">7.12 Editor de pasos · 7.13 Selector de responsables</h3>
+    <div class="grid-auto">
+      <div>
+        <p class="campo" style="margin-bottom:var(--espacio-3)"><label for="paso-1">Pasos del checklist</label></p>
+        <div class="editor-paso"><span class="n">01</span><input id="paso-1" type="text" value="Revisar cada extensión en las salas por reto"><button class="quitar" type="button" aria-label="Quitar paso 1"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+        <div class="editor-paso"><span class="n">02</span><input type="text" value="Reemplazar las extensiones dañadas" aria-label="Paso 2"><button class="quitar" type="button" aria-label="Quitar paso 2"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+        <button class="btn btn-secundario" type="button" style="margin-top:var(--espacio-2)"><svg class="ico" aria-hidden="true"><use href="#i-mas"/></svg>Agregar paso</button>
+      </div>
+      <div>
+        <div class="campo" style="margin-bottom:var(--espacio-3)"><label for="buscar">Responsables</label><input id="buscar" type="search" value="" placeholder="Buscar por nombre" aria-describedby="resp-ayuda"><small id="resp-ayuda">Sin responsables, la tarea queda No asignada.</small></div>
+        <div class="chips"><span class="chip">Ana Torres<button type="button" aria-label="Quitar a Ana Torres"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-x"/></svg></button></span></div>
+        <label class="opcion"><input type="checkbox" checked><span class="caja"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span><span>Ana Torres<small>ana.torres@ejemplo.edu</small></span></label>
+        <label class="opcion"><input type="checkbox"><span class="caja"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span><span>Luis Mena<small>luis.mena@ejemplo.edu</small></span></label>
+        <label class="opcion"><input type="checkbox"><span class="caja"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span><span>Mateo Vela<small>mateo.vela@ejemplo.edu</small></span></label>
+      </div>
+    </div>
+
+    <h3 class="sub">7.14 Fila de estudiante</h3>
+    <div style="max-width:760px">
+      <div class="estudiante"><div><b>Ana Torres</b><span>ana.torres@ejemplo.edu · 099 000 0001</span></div><div class="acciones"><button class="btn btn-secundario" type="button">Editar</button><button class="btn btn-peligro" type="button">Dar de baja</button></div></div>
+      <div class="estudiante"><div><b>Luis Mena</b><span>luis.mena@ejemplo.edu · 099 000 0002</span></div><div class="acciones"><button class="btn btn-secundario" type="button">Editar</button><button class="btn btn-peligro" type="button">Dar de baja</button></div></div>
+    </div>
+
+    <h3 class="sub">7.6 Diálogo de confirmación</h3>
+    <div class="dialogo" role="dialog" aria-labelledby="dlg-titulo" aria-describedby="dlg-texto">
+      <h4 id="dlg-titulo">¿Confirmar la ejecución?</h4>
+      <p id="dlg-texto">Se marcará como completada para Ana Torres y Luis Mena. Quedará registrada a tu nombre.</p>
+      <div class="acciones"><button class="btn btn-primario" type="button">Confirmar ejecución</button><button class="btn btn-secundario" type="button">Aún no</button></div>
+    </div>
+
+    <h3 class="sub">7.15 Estados de pantalla</h3>
+    <div class="grid-auto">
+      <div><div class="esqueleto" aria-hidden="true"></div><p class="ref" style="margin-top:var(--espacio-2)">Cargando: esqueleto del tamaño de una franja, sin brillo.</p></div>
+      <div><p class="vacio">No tienes tareas asignadas. Cuando un administrador te asigne una, aparecerá aquí.</p><p class="ref" style="margin-top:var(--espacio-2)">Vacío.</p></div>
+      <div><div class="aviso vencida" role="alert"><svg class="ico" aria-hidden="true"><use href="#i-alerta"/></svg><b>No se pudo guardar</b><p>Tus pasos marcados siguen aquí.</p></div><button class="btn btn-secundario" type="button" style="margin-top:var(--espacio-3)">Reintentar</button></div>
+    </div>
+  </section>
+
+  <!-- ============================== PANTALLAS ============================== -->
+  <section class="seccion" id="pantallas" aria-labelledby="s-pantallas">
+    <h2 id="s-pantallas">Pantallas</h2>
+    <p class="nota">Estudiante (Ana Torres) en el celular y administrador en el escritorio. Viernes 19 de febrero, 09:35. Cada pantalla tiene como máximo un bloque sólido morado.</p>
+    <div class="pantallas">
+      <!-- Mis tareas -->
+      <div>
+        <div class="celular">
+          <div class="barra-sistema"><span>09:35</span><span>Estudiante</span></div>
+          <div class="encabezado"><h3 class="t-pantalla">Mis tareas</h3><button class="campana" type="button" aria-label="Avisos, 3 sin leer"><svg class="ico" aria-hidden="true"><use href="#i-campana"/></svg><span class="contador" aria-hidden="true">3</span></button></div>
+          <div class="cuerpo">
+            <section class="novedades" aria-labelledby="nov-2">
+              <p class="t-kicker">Novedades</p>
+              <h4 id="nov-2" class="t-senal">5 novedades</h4>
+              <ul><li>1 tarea nueva</li><li>1 completada por Sofía Ruiz</li><li>1 venció</li><li>1 cambió de hora o lugar</li><li>1 ya no es tuya</li></ul>
+              <button class="btn btn-sobre-morado" type="button">Entendido</button>
+            </section>
+            <p class="grupo">Vencidas · 1</p>
+            <a class="franja is-vencida" href="#detalle">
+              <div class="franja-insignias"><span class="insignia vencida"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-alerta"/></svg>Vencida</span></div>
+              <span class="franja-titulo">Preparar la sala de mentorías del Reto 02</span>
+              <div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Sala 3 · Edificio Galileo</span></div>
+              <div class="barra"><i style="width:33%"></i></div>
+              <div class="franja-vence"><span>Venció</span><b>08:30</b></div>
+            </a>
+            <p class="grupo">En ejecución · 1</p>
+            <a class="franja" href="#detalle">
+              <div class="franja-insignias"><span class="insignia ejecucion"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-play"/></svg>En ejecución</span><span class="insignia proxima"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-arena"/></svg><span class="parte">Próxima:</span><span class="parte">25 min</span></span></div>
+              <span class="franja-titulo">Check-in de participantes</span>
+              <div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Hall principal</span></div>
+              <div class="barra"><i style="width:40%"></i></div>
+              <div class="franja-vence"><span>Hoy</span><b>10:00</b></div>
+            </a>
+            <p class="grupo">Pendientes · 1</p>
+            <a class="franja" href="#detalle">
+              <div class="franja-insignias"><span class="insignia pendiente"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-reloj"/></svg>Pendiente</span></div>
+              <span class="franja-titulo">Preparar el desayuno del sábado</span>
+              <div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Cafetería del campus</span></div>
+              <div class="barra"><i style="width:0%"></i></div>
+              <div class="franja-vence"><span>Mañana</span><b>07:30</b></div>
+            </a>
+            <p class="grupo">Completadas · 1</p>
+            <a class="franja is-completada" href="#detalle">
+              <div class="franja-insignias"><span class="insignia completada"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>Completada</span></div>
+              <span class="franja-titulo">Repartir kits de bienvenida</span>
+              <div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>Confirmó Sofía Ruiz · 08:52</span></div>
+              <div class="barra"><i style="width:100%"></i></div>
+              <div class="franja-vence"><span>Hoy</span><b>09:00</b></div>
+            </a>
+          </div>
+        </div>
+        <p class="leyenda">«Mis tareas»: Novedades es el único bloque morado; los grupos siguen R18 y R19.</p>
+      </div>
+
+      <!-- Detalle -->
+      <div id="detalle">
+        <div class="celular">
+          <div class="barra-sistema"><span>09:35</span><span>Estudiante</span></div>
+          <div class="cuerpo" style="padding-top:var(--espacio-4)">
+            <div class="franja-insignias"><span class="insignia ejecucion"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-play"/></svg>En ejecución</span><span class="insignia proxima"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-arena"/></svg><span class="parte">Próxima:</span><span class="parte">25 min</span></span></div>
+            <h3 class="t-pantalla">Check-in de participantes</h3>
+            <div class="detalle-meta">
+              <span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Hall principal</span>
+              <span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-reloj"/></svg>Hoy · 10:00</span>
+              <span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-personas"/></svg>Ana Torres, Luis Mena</span>
+            </div>
+            <div>
+              <p class="avance">2 de 5 pasos</p>
+              <label class="paso"><span class="n">01</span><span class="texto">Recoger las listas impresas en coordinación</span><input type="checkbox" checked><span class="caja"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span></label>
+              <label class="paso"><span class="n">02</span><span class="texto">Instalar 2 laptops en la mesa de registro</span><input type="checkbox" checked><span class="caja"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span></label>
+              <label class="paso"><span class="n">03</span><span class="texto">Probar el lector de códigos QR</span><input type="checkbox"><span class="caja"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span></label>
+              <label class="paso"><span class="n">04</span><span class="texto">Entregar una manilla a cada participante</span><input type="checkbox"><span class="caja"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span></label>
+              <label class="paso"><span class="n">05</span><span class="texto">Reportar el total de asistentes</span><input type="checkbox"><span class="caja"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span></label>
+            </div>
+            <div class="campo"><label for="obs-2">Observaciones · opcional</label><textarea id="obs-2" aria-describedby="obs-2-ayuda">Faltan 20 manillas, pedí más a coordinación.</textarea><small id="obs-2-ayuda">Las ven todos los responsables de la tarea.</small></div>
+          </div>
+          <div class="barra-fija">
+            <p class="ayuda" id="ayuda-guardar">Con los 5 pasos marcados podrás confirmar la ejecución.</p>
+            <button class="btn btn-primario btn-ancho" type="button" aria-describedby="ayuda-guardar">Guardar avance</button>
+          </div>
+        </div>
+        <p class="leyenda">Detalle de tarea con el checklist a medio completar; la acción principal a ancho completo en la barra fija.</p>
+      </div>
+
+      <!-- Panel de avisos -->
+      <div>
+        <div class="celular">
+          <div class="barra-sistema"><span>09:35</span><span>Estudiante</span></div>
+          <div class="encabezado"><h3 class="t-aviso">Avisos</h3><button class="campana" type="button" aria-label="Cerrar avisos"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+          <div class="cuerpo" style="gap:0">
+            <p class="aviso-hora">Hoy · 09:30</p>
+            <div class="aviso proxima" role="status"><svg class="ico" aria-hidden="true"><use href="#i-arena"/></svg><b>Próxima a vencer</b><p>«Check-in de participantes» vence en 25 min · faltan 3 pasos</p></div>
+            <p class="aviso-hora">Hoy · 08:52</p>
+            <div class="aviso otro" role="status"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><b>Completada por otra persona</b><p>Sofía Ruiz completó «Repartir kits de bienvenida»</p></div>
+            <p class="aviso-hora">Hoy · 08:30</p>
+            <div class="aviso vencida" role="alert"><svg class="ico" aria-hidden="true"><use href="#i-alerta"/></svg><b>Tarea vencida</b><p>«Preparar la sala de mentorías del Reto 02» venció. Todavía puedes completarla.</p></div>
+            <p class="aviso-hora">Hoy · 08:05</p>
+            <div class="aviso cambio" role="status"><svg class="ico" aria-hidden="true"><use href="#i-reloj"/></svg><b>Cambió la hora</b><p>«Check-in de participantes» ahora vence hoy a las 10:00</p></div>
+            <p class="aviso-hora">Hoy · 07:50</p>
+            <div class="aviso nueva" role="status"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg><b>Nueva tarea para ti</b><p>«Preparar el desayuno del sábado» · Mañana 07:30</p></div>
+          </div>
+        </div>
+        <p class="leyenda">Panel de avisos: del más reciente al más antiguo, con su hora; al abrirlo, el contador vuelve a 0.</p>
+      </div>
+    </div>
+
+    <!-- Tablero -->
+    <div class="escritorio" id="tablero">
+      <div class="barra-sistema"><span>Tablero de cumplimiento</span><span>Administrador</span></div>
+      <div class="escritorio-cabeza"><h3 class="t-pantalla">Tablero</h3><button class="btn btn-primario" type="button"><svg class="ico" aria-hidden="true"><use href="#i-mas"/></svg>Crear tarea</button></div>
+      <div class="escritorio-cuerpo">
+        <div class="indicador">
+          <div class="con-vencidas"><b>1</b><span>Vencidas</span></div>
+          <div><b>2</b><span>En ejecución</span></div>
+          <div><b>3</b><span>Pendientes</span></div>
+          <div><b>1</b><span>No asignadas</span></div>
+          <div><b>1</b><span>Completadas</span></div>
+        </div>
+        <p class="grupo">Vencidas · 1</p>
+        <div class="tablero-grupo">
+          <a class="franja is-vencida" href="#tablero"><div class="franja-insignias"><span class="insignia vencida"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-alerta"/></svg>Vencida</span></div><span class="franja-titulo">Preparar la sala de mentorías del Reto 02</span><div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Sala 3 · Edificio Galileo</span><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-personas"/></svg>Mateo Vela, Ana Torres</span></div><div class="barra"><i style="width:33%"></i></div><div class="franja-vence"><span>Venció (1 de 3)</span><b>08:30</b></div></a>
+        </div>
+        <p class="grupo">En ejecución · 2</p>
+        <div class="tablero-grupo">
+          <a class="franja" href="#tablero"><div class="franja-insignias"><span class="insignia ejecucion"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-play"/></svg>En ejecución</span><span class="insignia proxima"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-arena"/></svg><span class="parte">Próxima:</span><span class="parte">25 min</span></span></div><span class="franja-titulo">Check-in de participantes</span><div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Hall principal</span><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-personas"/></svg>Ana Torres, Luis Mena</span></div><div class="barra"><i style="width:40%"></i></div><div class="franja-vence"><span>Hoy (2 de 5)</span><b>10:00</b></div></a>
+          <a class="franja" href="#tablero"><div class="franja-insignias"><span class="insignia ejecucion"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-play"/></svg>En ejecución</span></div><span class="franja-titulo">Montar el audio del teatro</span><div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Teatro Calderón de la Barca</span><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-personas"/></svg>Mateo Vela</span></div><div class="barra"><i style="width:66%"></i></div><div class="franja-vence"><span>Hoy (4 de 6)</span><b>14:30</b></div></a>
+        </div>
+        <p class="grupo">Pendientes · 3</p>
+        <div class="tablero-grupo">
+          <a class="franja" href="#tablero"><div class="franja-insignias"><span class="insignia pendiente"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-reloj"/></svg>Pendiente</span></div><span class="franja-titulo">Armar mesas para la noche de código</span><div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Hall principal</span><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-personas"/></svg>Sofía Ruiz</span></div><div class="barra"><i style="width:0%"></i></div><div class="franja-vence"><span>Hoy (0 de 4)</span><b>21:00</b></div></a>
+          <a class="franja" href="#tablero"><div class="franja-insignias"><span class="insignia pendiente"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-reloj"/></svg>Pendiente</span></div><span class="franja-titulo">Preparar el desayuno del sábado</span><div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Cafetería del campus</span><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-personas"/></svg>Ana Torres</span></div><div class="barra"><i style="width:0%"></i></div><div class="franja-vence"><span>Mañana (0 de 3)</span><b>07:30</b></div></a>
+          <a class="franja" href="#tablero"><div class="franja-insignias"><span class="insignia pendiente"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-reloj"/></svg>Pendiente</span></div><span class="franja-titulo">Desmontar la señalética del campus</span><div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Pasillos y accesos</span><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-personas"/></svg>Luis Mena, Sofía Ruiz</span></div><div class="barra"><i style="width:0%"></i></div><div class="franja-vence"><span>En 2 días (0 de 4)</span><b>18:00</b></div></a>
+        </div>
+        <p class="grupo">No asignadas · 1</p>
+        <div class="tablero-grupo">
+          <a class="franja" href="#tablero"><div class="franja-insignias"><span class="insignia no-asignada"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-sin-persona"/></svg>No asignada</span></div><span class="franja-titulo">Revisar las extensiones eléctricas</span><div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-lugar"/></svg>Salas por reto</span><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-personas"/></svg>Sin responsables</span></div><div class="barra"><i style="width:0%"></i></div><div class="franja-vence"><span>Hoy (0 de 2)</span><b>16:00</b></div></a>
+        </div>
+        <p class="grupo">Completadas · 1</p>
+        <div class="tablero-grupo">
+          <a class="franja is-completada" href="#tablero"><div class="franja-insignias"><span class="insignia completada"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>Completada</span></div><span class="franja-titulo">Repartir kits de bienvenida</span><div class="franja-meta"><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg>Confirmó Sofía Ruiz · 08:52</span><span><svg class="ico ico-sm" aria-hidden="true"><use href="#i-personas"/></svg>Sofía Ruiz, Ana Torres</span></div><div class="barra"><i style="width:100%"></i></div><div class="franja-vence"><span>Hoy (4 de 4)</span><b>09:00</b></div></a>
+        </div>
+      </div>
+    </div>
+    <p class="leyenda">Tablero: indicador arriba (R22), grupos en el orden de R19, lo más cercano al momento actual primero (R20), «Crear tarea» como único bloque morado.</p>
+  </section>
+
+  <!-- ============================== ACCESIBILIDAD ============================== -->
+  <section class="seccion" aria-labelledby="s-a11y">
+    <h2 id="s-a11y">Accesibilidad</h2>
+    <p class="nota">DESIGN.md §8. Contraste calculado con WCAG 2.x; foco de 3 px (tinta dentro del morado); áreas táctiles de 44 px o más; ningún estado depende solo del color.</p>
+    <div class="tabla-scroll">
+      <table class="tabla">
+        <thead><tr><th>Par</th><th>Contraste</th><th>Mínimo</th></tr></thead>
+        <tbody>
+          <tr><td>Texto sobre fondo</td><td>20.54:1</td><td>4.5:1</td></tr>
+          <tr><td>Texto suave sobre superficie</td><td>8.18:1</td><td>4.5:1</td></tr>
+          <tr><td>Acción (morado) sobre fondo</td><td>5.98:1</td><td>4.5:1</td></tr>
+          <tr><td>Tinta sobre acción (botón, Novedades)</td><td>5.83:1</td><td>4.5:1</td></tr>
+          <tr><td>Tinta sobre en ejecución (lima)</td><td>13.27:1</td><td>4.5:1</td></tr>
+          <tr><td>Tinta sobre vencida (rojo)</td><td>7.21:1</td><td>4.5:1</td></tr>
+          <tr><td>Tinta sobre próxima (ámbar)</td><td>13.01:1</td><td>4.5:1</td></tr>
+          <tr><td>Texto sobre completada</td><td>13.66:1</td><td>4.5:1</td></tr>
+          <tr><td>Vencida (rojo) sobre superficie</td><td>7.06:1</td><td>4.5:1</td></tr>
+          <tr><td>Borde de control sobre fondo</td><td>3.71:1</td><td>3:1</td></tr>
+          <tr><td>Borde de control sobre superficie</td><td>3.78:1</td><td>3:1</td></tr>
+          <tr><td>Foco lima sobre fondo</td><td>13.61:1</td><td>3:1</td></tr>
+          <tr><td>Foco tinta sobre acción</td><td>5.83:1</td><td>3:1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+</body>
+</html>

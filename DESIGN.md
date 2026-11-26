@@ -165,6 +165,7 @@ Ninguna pantalla hace scroll horizontal a 390 px ni a 360 px (H-10). Las columna
 
 - Etiqueta arriba, en `--texto-kicker` y `--color-accion`; si es opcional lo dice: «Observaciones · opcional» (R13).
 - Campo con fondo `--color-superficie`, borde 2 px `--color-borde-control`, texto `--texto-base` (16 px), alto mínimo `--alto-tactil`. El área de observaciones mide al menos 96 px.
+- Texto de ejemplo (`placeholder`) en `--color-texto-suave` con opacidad 1 (8.18:1); el color por defecto del navegador da 4.3:1 y no cumple.
 - Ayuda debajo en `--texto-meta` y `--color-texto-suave` («Las ven todos los responsables de la tarea»).
 - Error: borde y mensaje en `--color-vencida`, mensaje debajo del campo y enlazado con `aria-describedby`.
 - Foco: anillo de 3 px `--color-foco` con 2 px de separación.

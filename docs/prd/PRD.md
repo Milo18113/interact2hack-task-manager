@@ -21,7 +21,7 @@ Hay dos perfiles: **administrador** y **estudiante (staff)**. Cada usuario tiene
 | Perfil | Puede | No puede |
 | --- | --- | --- |
 | **Administrador** | Crear, ver, editar y eliminar estudiantes. Crear, ver, editar, archivar y asignar tareas. Ver el detalle de cualquier tarea, con su checklist y sus observaciones. Ver el tablero de cumplimiento. Cambiar su propia contraseña. | Crear, editar ni eliminar administradores `[SUPUESTO S-01]`. Ser responsable de una tarea, marcar pasos o confirmar una tarea. |
-| **Estudiante (staff)** | Ver la lista de sus tareas, pendientes y completadas. Entrar al detalle de una tarea suya. Marcar los pasos del checklist, escribir observaciones, guardar su avance y confirmar la ejecución. Ver sus avisos. Cambiar su propia contraseña. | Ver tareas en las que no es responsable. Ver el tablero. Crear, editar, asignar ni archivar tareas. Gestionar usuarios. Editar su nombre, correo o teléfono `[SUPUESTO S-17]`. |
+| **Estudiante (staff)** | Ver la lista de sus tareas, pendientes y completadas. Entrar al detalle de una tarea suya. Marcar los pasos del checklist, escribir observaciones, guardar su avance y confirmar la ejecución. Ver sus avisos, el resumen de novedades y el historial de sus avisos. Cambiar su propia contraseña. | Ver tareas en las que no es responsable. Ver el tablero. Crear, editar, asignar ni archivar tareas. Gestionar usuarios. Editar su nombre, correo o teléfono `[SUPUESTO S-17]`. |
 
 Todos entran con su correo y su contraseña. No hay registro: los administradores vienen creados de antemano y a los estudiantes los crea un administrador (R2, R3).
 
@@ -39,7 +39,7 @@ Todos entran con su correo y su contraseña. No hay registro: los administradore
 | Prioridad | Funcionalidad |
 | --- | --- |
 | **Must** | Inicio de sesión con los dos perfiles, con los administradores creados de antemano. Gestión de estudiantes por los administradores. Cambio de contraseña por el propio usuario y recuperación por correo. Crear, editar, archivar y asignar tareas con fecha y hora de vencimiento, lugar, checklist y responsables. Lista de tareas del estudiante, con pendientes y completadas. Detalle de la tarea con el checklist compartido, observaciones, guardar avance y confirmar la ejecución. Estados y vencimiento de las tareas según las reglas R8 a R16. Tablero de cumplimiento para administradores (R19 a R22). Identidad visual del Interact2Hack. |
-| **Should** | Avisos dentro de la herramienta: tarea nueva asignada, tarea próxima a vencer y tarea vencida (R23). |
+| **Should** | Avisos dentro de la herramienta: tarea nueva asignada, tarea próxima a vencer y tarea vencida (R23). Resumen de novedades al abrir la herramienta (R25) e historial de avisos con los no leídos (R26). |
 | **Could** | Historial de cambios de cada tarea con sus fechas (P-16: «Extra si se puede»). Adjuntar evidencias al completar una tarea (P-18: «buen extra»). |
 | **Won't (esta versión)** | Categorías de tareas. Aprobación del administrador para cerrar una tarea. Un checklist por responsable. Notificaciones por correo, mensajería o push. Usuarios con más de un perfil. Usuario master o super administrador. |
 
@@ -75,17 +75,19 @@ Los avisos los pidió el cliente (P-13). Van en Should porque la herramienta cum
 | R11 | Una tarea solo se puede confirmar con **todos sus pasos marcados**. La confirma cualquiera de sus responsables, sin aprobación de un administrador, y queda completada para todos. Se registra quién la confirmó y cuándo `[SUPUESTO S-05]`. |
 | R12 | Un responsable puede **guardar** los pasos marcados y las observaciones sin confirmar la tarea. Si guarda con todos los pasos marcados, la herramienta le pregunta si quiere confirmar la ejecución `[SUPUESTO S-04]`. |
 | R13 | Las **observaciones son opcionales** y no impiden confirmar una tarea. Hay un solo campo de observaciones por tarea, compartido por sus responsables `[SUPUESTO S-06]`. |
-| R14 | Un administrador puede reagendar una tarea completada o vencida fijando una nueva fecha y hora de vencimiento. Se conservan el avance y la confirmación registrada. Una tarea completada conserva su estado. Una tarea vencida se recalcula según R9 con el nuevo vencimiento. |
+| R14 | Un administrador puede reagendar una tarea completada o vencida fijando una nueva fecha y hora de vencimiento. Se conservan el avance y la confirmación registrada. Una tarea completada conserva su estado. Una tarea vencida se recalcula según R9 con el nuevo vencimiento `[SUPUESTO S-08]`. |
 | R15 | Una tarea **vencida no desaparece**: se muestra con prioridad alta y sus responsables todavía la pueden completar `[SUPUESTO S-07]`. Al confirmarla pasa a Completada. |
-| R16 | El tablero muestra la marca **«próxima a vencer»** en las tareas No asignadas, Pendientes o En ejecución cuando faltan 30 minutos o menos y el plazo aún no ha vencido. |
+| R16 | El tablero muestra la marca **«próxima a vencer»** en las tareas No asignadas, Pendientes o En ejecución cuando faltan 30 minutos o menos y el plazo aún no ha vencido `[SUPUESTO S-09]`. |
 | R17 | **Eliminar una tarea la archiva**: deja de verse en el tablero y en las listas de los estudiantes, y su información se conserva. Una tarea archivada no se puede restaurar en esta versión `[SUPUESTO S-10]`. |
 | R18 | Un estudiante solo ve las tareas no archivadas en las que es responsable, pendientes y completadas, separadas por estado y en el mismo orden que el tablero `[SUPUESTO S-13]`. En cada tarea suya ve también a los demás responsables. |
 | R19 | **Solo los administradores ven el tablero.** Muestra todas las tareas no archivadas como tarjetas, separadas por estado en este orden: **Vencidas, En ejecución, Pendientes, No asignadas, Completadas** `[SUPUESTO S-11]`. |
 | R20 | Dentro de cada sección del tablero va primero la tarea cuya fecha y hora de vencimiento está **más cerca del momento actual** `[SUPUESTO S-12]`. |
 | R21 | Cada tarjeta del tablero muestra el **estado, título, responsables, lugar y fecha y hora de vencimiento**, la marca «próxima a vencer» cuando aplica y el avance del checklist, por ejemplo «2 de 5 pasos» `[SUPUESTO S-14]`. |
 | R22 | Sobre las tarjetas, el tablero muestra un resumen con **cuántas tareas hay en cada estado** `[SUPUESTO S-14]`. |
-| R23 | Cada estudiante recibe un **aviso dentro de la aplicación** cuando se le asigna una nueva tarea, cuando una tarea a su cargo pasa a **«próxima a vencer»** (R16) y cuando una tarea a su cargo vence. |
-| R24 | Al dar de baja a un estudiante, el administrador deshabilita su cuenta y el estudiante pierde el acceso a la herramienta. Se lo retira de la lista de responsables de todas sus tareas, incluidas las completadas y archivadas. Se aplican las condiciones de estado de R9 y se conserva el registro de confirmación de R11. |
+| R23 | Cada estudiante recibe un **aviso dentro de la aplicación** cuando se le asigna una nueva tarea, cuando una tarea a su cargo pasa a **«próxima a vencer»** (R16) y cuando una tarea a su cargo vence. Los administradores no reciben avisos `[SUPUESTO S-15]`. |
+| R24 | Al dar de baja a un estudiante, el administrador deshabilita su cuenta y el estudiante pierde el acceso a la herramienta. Se lo retira de la lista de responsables de todas sus tareas, incluidas las completadas y archivadas. Se aplican las condiciones de estado de R9 y se conserva el registro de confirmación de R11 `[SUPUESTO S-16]`. |
+| R25 | Al abrir la herramienta, el estudiante ve un **resumen de novedades** ocurridas desde la última vez que la abrió: tareas nuevas asignadas a él, tareas que comparte y que otro responsable completó, tareas suyas que vencieron, tareas suyas a las que un administrador les cambió la hora o el lugar, y tareas de las que lo retiraron o que se archivaron. El resumen se queda hasta que el estudiante lo descarta; si no hay novedades, no se muestra. Los administradores no ven este resumen `[SUPUESTO S-20]`. |
+| R26 | Los avisos de R23 se guardan. El estudiante puede consultar **todos sus avisos del evento**, del más reciente al más antiguo y con su hora, y ve cuántos no ha leído; al consultarlos quedan como leídos. Los administradores no tienen avisos `[SUPUESTO S-21]`. |
 
 ## 7. Épicas
 
@@ -95,7 +97,7 @@ Los avisos los pidió el cliente (P-13). Van en Should porque la herramienta cum
 | E2 | Gestión de tareas | El administrador crea, edita, asigna y archiva tareas con su fecha y hora de vencimiento, lugar, checklist y responsables (R6, R7, R17). | Must |
 | E3 | Ejecución de tareas | El estudiante ve sus tareas, entra al detalle, marca los pasos del checklist compartido, escribe observaciones, guarda su avance y confirma la ejecución. Los estados y el vencimiento se actualizan solos (R8 a R16, R18). | Must |
 | E4 | Tablero de cumplimiento | Los administradores ven todas las tareas separadas por estado, con lo vencido primero, y un resumen de cuántas hay en cada estado (R19 a R22). | Must |
-| E5 | Avisos | El staff recibe avisos dentro de la aplicación por nuevas asignaciones, tareas próximas a vencer y tareas vencidas (R23). | Should |
+| E5 | Avisos | El staff recibe avisos dentro de la aplicación por nuevas asignaciones, tareas próximas a vencer y tareas vencidas; al abrir la herramienta ve un resumen de lo que cambió desde su última visita, y puede consultar el historial de sus avisos (R23, R25, R26). | Should |
 | E6 | Historial y evidencias | Registro de los cambios de cada tarea con sus fechas, y adjuntos como evidencia al completarla (P-16, P-18). | Could |
 
 ## 8. Supuestos y puntos abiertos
@@ -109,18 +111,20 @@ Los avisos los pidió el cliente (P-13). Van en Should porque la herramienta cum
 | S-05 | Se registra quién confirmó la tarea y cuándo (R11). | Con un checklist compartido (P-07), el administrador necesita saber quién la cerró. El historial completo de cambios es un extra (P-16). | ¿Necesitan ver quién completó cada tarea? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-06 | Un solo campo de observaciones por tarea, compartido (R13). | El checklist es uno solo para todos (P-07); seguimos la misma lógica. | ¿Cada responsable escribe sus propias observaciones o son unas solas para la tarea? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-07 | Una tarea vencida se puede seguir completando (R15). | El cliente dijo que «no desaparece» (P-14), pero no si se puede completar. Bloquearla impediría terminar trabajo atrasado. | ¿Una tarea vencida se puede completar? ¿Debe quedar marcada como completada con retraso? | `[SUPUESTO]` · validar en el Avance 3 |
-| S-08 | Una tarea completada no se edita ni se reabre (R14). | El cliente no lo dijo. Sin esta regla, un cambio después de completarla cambiaría lo que el estudiante confirmó. | Si una tarea se completa por error, ¿un administrador puede editarla o reabrirla? | `[SUPUESTO]` · validar en el Avance 3 |
-| S-09 | «Próxima a vencer» = faltan 2 horas o menos (R16). | La descripción habla de «tareas próximas a vencer» sin una cifra. El evento dura tres días y las tareas se miden en horas. | ¿Con cuánta anticipación una tarea debe considerarse próxima a vencer? | `[SUPUESTO]` · validar en el Avance 3 |
+| S-08 | Un administrador puede reagendar una tarea completada o vencida con una nueva fecha y hora; se conservan el avance y la confirmación, y la tarea no se reabre (R14). | El cliente no dijo qué pasa con una tarea completada por error o vencida. Reagendar permite corregir el plazo sin borrar lo que el estudiante confirmó (S-05). | Si una tarea se completa por error o vence, ¿basta con que el administrador la reagende, o necesita reabrirla? | `[SUPUESTO]` · validar en el Avance 3 |
+| S-09 | «Próxima a vencer» = faltan 30 minutos o menos (R16). | La descripción habla de «tareas próximas a vencer» sin una cifra. El equipo fijó 30 minutos para que la marca señale solo lo inminente durante el evento. | ¿Con cuánta anticipación una tarea debe considerarse próxima a vencer? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-10 | Las tareas archivadas no las ve nadie y no se restauran (R17). | El cliente dijo «Que se archive nomas, no sea visible» (P-17), sin decir si alguien las consulta después. | ¿Un administrador necesita ver o recuperar las tareas archivadas? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-11 | El tablero muestra todas las tareas no archivadas, y las Pendientes van después de En ejecución (R19). | El cliente dijo «las n tareas» y el orden «vencidas, … en ejecución, sin asignar, completadas» (P-04), sin mencionar las pendientes ni el valor de «n». | ¿El tablero muestra todas las tareas o un número fijo? ¿Dónde van las pendientes? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-12 | Dentro de cada sección va primero lo más cercano al momento actual (R20). | El cliente dijo «más reciente a antiguo» (P-04, clave). Para una vencida, la más reciente es la que venció hace menos; para una futura, la que vence antes. | ¿Las tareas que vencen antes van primero? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-13 | La lista del estudiante usa las mismas secciones y el mismo orden que el tablero (R18). | El cliente solo describió el orden del tablero. Usar el mismo evita dos lógicas distintas. | ¿La lista del estudiante debe ordenarse igual que el tablero? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-14 | El tablero muestra el avance del checklist en cada tarjeta y un resumen con la cantidad de tareas por estado (R21, R22). | La descripción dice que el tablero «es un resumen general del estado de las tareas», pero el cliente no dijo qué cifras lleva (P-09). | ¿Qué cifras quieren ver en el resumen del tablero? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-15 | Los avisos son para los responsables: tarea asignada, próxima a vencer y vencida. Los administradores no reciben avisos (R23). | El cliente dijo «para vencimiento o nuevas tareas» (P-13), sin decir para quién ni en qué momento del vencimiento. | ¿Los administradores también deben recibir avisos? ¿El aviso de vencimiento es antes, al vencer o ambos? | `[SUPUESTO]` · validar en el Avance 3 |
-| S-16 | Al eliminar a un estudiante se lo quita de sus tareas no completadas (R24). | La descripción permite eliminar usuarios, pero no dice qué pasa con sus tareas. | Al eliminar un estudiante, ¿se lo quita de sus tareas, se bloquea la eliminación o se reasignan sus tareas? | `[SUPUESTO]` · validar en el Avance 3 |
+| S-16 | Dar de baja a un estudiante deshabilita su cuenta y lo retira de todas sus tareas, incluidas las completadas y archivadas; se conserva quién confirmó cada una (R24). | La descripción permite eliminar usuarios, pero no dice qué pasa con sus tareas. Deshabilitar en vez de borrar conserva el registro de confirmación (R11). | Al eliminar un estudiante, ¿se lo quita de sus tareas, se bloquea la eliminación o se reasignan sus tareas? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-17 | El estudiante no edita su nombre, correo ni teléfono; solo su contraseña (sección 2). | El cliente solo habló de que el usuario cambie su contraseña (P-10). | ¿El estudiante puede editar sus propios datos? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-18 | Los administradores usan una computadora y los estudiantes el celular, con conexión a internet durante el evento (sección 1). | Así lo plantean las instrucciones del Avance 2; el cliente no habló del contexto de uso ni de la conectividad. | ¿Habrá internet estable para el staff en todo el campus? ¿Los administradores también la usarán desde el celular? | `[SUPUESTO]` · validar en el Avance 3 |
 | S-19 | Dos usuarios no pueden tener el mismo correo (R4). | El correo es el dato con el que se entra y al que llega la recuperación de contraseña (P-02); si se repite, no se sabría a qué cuenta entrar. Ninguna fuente lo exige. | ¿Debe ser obligatorio que no se repita el correo entre usuarios? | `[SUPUESTO]` · validar en el Avance 3 |
+| S-20 | Al abrir la herramienta, el estudiante ve un resumen de novedades desde su última visita, con cinco tipos de cambio; se queda hasta que lo descarta (R25). | El cliente pidió avisos «para vencimiento o nuevas tareas» (P-13). Un estudiante que vuelve a abrir la herramienta necesita saber qué cambió sin revisar tarea por tarea; el cambio de hora o lugar evita que llegue tarde o al aula equivocada. Usa el registro de quién confirmó y cuándo (S-05) y exige registrar cuándo se asignó, editó o retiró cada tarea. | ¿Qué cambios debe ver el estudiante al volver a abrir la herramienta? | `[SUPUESTO]` · validar en el Avance 3 |
+| S-21 | Los avisos se guardan y el estudiante puede consultarlos todos, con el número de no leídos (R26). | El cliente pidió avisos dentro de la aplicación (P-13), pero no si se pueden volver a ver. Sin historial, un aviso que no se leyó a tiempo se pierde. El evento dura tres días, así que no hace falta limitarlo. | ¿El estudiante necesita consultar los avisos anteriores? | `[SUPUESTO]` · validar en el Avance 3 |
 
 **Puntos abiertos:**
 
@@ -145,14 +149,16 @@ Los avisos los pidió el cliente (P-13). Van en Should porque la herramienta cum
 | R11 | P-06, P-07 (clave), P-08 y S-05 |
 | R12 | Descripción («el botón de guardar») y S-04 |
 | R13 | P-01 y S-06 |
-| R14 | Decisión del equipo sobre reagendar tareas completadas o vencidas |
+| R14 | Decisión del equipo sobre reagendar tareas completadas o vencidas (S-08) |
 | R15 | P-14 y S-07 |
-| R16 | Descripción («tareas próximas a vencer») y decisión del equipo sobre el umbral de 30 minutos |
+| R16 | Descripción («tareas próximas a vencer») y decisión del equipo sobre el umbral de 30 minutos (S-09) |
 | R17 | P-17 y S-10. La descripción dice «eliminar tareas»; manda la respuesta del cliente: se archivan. |
 | R18 | Descripción («ver lista de tareas asignadas»), P-03 y S-13 |
 | R19 | P-04, P-04 (clave) y S-11 |
 | R20 | P-04 (clave) y S-12 |
 | R21 | P-09, P-04 (clave) y S-14 |
 | R22 | Descripción («resumen general del estado de las tareas») y S-14 |
-| R23 | P-13 y decisión del equipo sobre destinatarios y momentos de aviso |
-| R24 | Descripción («eliminar usuarios») y decisión del equipo sobre deshabilitación y retiro de asignaciones |
+| R23 | P-13 y decisión del equipo sobre destinatarios y momentos de aviso (S-15) |
+| R24 | Descripción («eliminar usuarios») y decisión del equipo sobre deshabilitación y retiro de asignaciones (S-16) |
+| R25 | P-13, R11 (quién confirmó y cuándo) y S-20 |
+| R26 | P-13, R23 y S-21 |

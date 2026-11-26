@@ -26,9 +26,13 @@
 .badge.proxima { background: var(--estado-ambar); color: var(--i2h-ink); }
 .badges { display: flex; flex-wrap: wrap; gap: 12px; }
 
-/* Tarjeta de tarea */
-.card { border: 2px solid var(--i2h-faint); background: var(--superficie); display: grid; }
-.card-top { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 16px 0; }
+/* Tarjeta de tarea en franja (brief): borde solo arriba y abajo, se abre al
+   tocarla para ver el detalle y el checklist. Borde al 40 % para llegar a 3:1. */
+.card { border-top: 2px solid var(--borde-control); border-bottom: 2px solid var(--borde-control); background: var(--superficie); display: grid; position: relative; cursor: pointer; transition: background 200ms var(--ease); }
+.card::after { content: '›'; position: absolute; right: 16px; top: 10px; font: 400 28px/1 var(--body); color: var(--i2h-muted); }
+.card:hover { background: var(--i2h-purple-08); }
+.card:hover::after { color: var(--i2h-purple); }
+.card-top { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 44px 0 16px; }
 .card-body { padding: 12px 16px 16px; display: grid; gap: 10px; }
 .card-title { font: 900 28px/0.95 var(--display); text-transform: uppercase; }
 .card-meta { display: grid; gap: 4px; font-size: 14px; color: var(--i2h-muted); }
@@ -82,6 +86,9 @@
 /* Aviso: tarjeta de contacto del brandboard (borde izquierdo de 6 px) */
 .notice { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; padding: 16px; background: var(--superficie); border-left: 6px solid var(--i2h-lime); }
 .notice.vencida { border-left-color: var(--estado-rojo); }
+.notice.proxima { border-left-color: var(--estado-ambar); }
+.notice.proxima .ico { color: var(--estado-ambar); }
+.notice.vencida .ico { color: var(--estado-rojo); }
 .notice b { font: 900 24px/1 var(--display); text-transform: uppercase; }
 .notice p { grid-column: 2; font-size: 14px; color: var(--i2h-muted); }
 .notices { display: grid; gap: 12px; max-width: 520px; }
@@ -171,6 +178,7 @@
     </div>
     <div class="notices">
       <div class="notice"><svg class="ico"><use href="#i-play"/></svg><b>Nueva tarea para ti</b><p>«Check-in de participantes» · Hall principal · vence hoy 10:00</p></div>
+      <div class="notice proxima"><svg class="ico"><use href="#i-hourglass"/></svg><b>Próxima a vencer</b><p>«Check-in de participantes» vence en 1 h 20 min · faltan 3 pasos</p></div>
       <div class="notice vencida"><svg class="ico"><use href="#i-alert"/></svg><b>Tarea vencida</b><p>«Preparar sala de mentorías» venció a las 08:30. Todavía puedes completarla.</p></div>
     </div>
   </section>
@@ -189,7 +197,7 @@
               <p>Hall principal · vence en 1 h 20 min · 2 de 5 pasos</p>
               <button class="btn">Continuar</button>
             </div>
-            <div class="card is-vencida">
+            <div role="link" tabindex="0" class="card is-vencida">
               <div class="card-top"><span class="badge vencida"><svg class="ico ico-sm"><use href="#i-alert"/></svg>Vencida</span></div>
               <div class="card-body">
                 <span class="card-title">Preparar sala de mentorías Reto 02</span>
@@ -198,7 +206,7 @@
               <div class="bar"><i style="width:33%"></i></div>
               <div class="card-due"><span>Venció</span><b>08:30</b></div>
             </div>
-            <div class="card">
+            <div role="link" tabindex="0" class="card">
               <div class="card-top"><span class="badge pendiente"><svg class="ico ico-sm"><use href="#i-clock"/></svg>Pendiente</span></div>
               <div class="card-body">
                 <span class="card-title">Armar mesas para la noche de código</span>
@@ -224,19 +232,19 @@
           </div>
           <p class="group-h">En ejecución · 3</p>
           <div class="grid-cards">
-            <div class="card">
+            <div role="link" tabindex="0" class="card">
               <div class="card-top"><span class="badge ejecucion"><svg class="ico ico-sm"><use href="#i-play"/></svg>En ejecución</span><span class="badge proxima"><svg class="ico ico-sm"><use href="#i-hourglass"/></svg>Próxima</span></div>
               <div class="card-body"><span class="card-title">Check-in de participantes</span><div class="card-meta"><span><svg class="ico ico-sm"><use href="#i-users"/></svg>Ana Torres, Luis Mena</span><span><svg class="ico ico-sm"><use href="#i-pin"/></svg>Hall principal</span></div></div>
               <div class="bar"><i style="width:40%"></i></div>
               <div class="card-due"><span>2 de 5 pasos</span><b>10:00</b></div>
             </div>
-            <div class="card">
+            <div role="link" tabindex="0" class="card">
               <div class="card-top"><span class="badge ejecucion"><svg class="ico ico-sm"><use href="#i-play"/></svg>En ejecución</span></div>
               <div class="card-body"><span class="card-title">Montar audio del teatro</span><div class="card-meta"><span><svg class="ico ico-sm"><use href="#i-users"/></svg>Mateo Vela</span><span><svg class="ico ico-sm"><use href="#i-pin"/></svg>Teatro Calderón de la Barca</span></div></div>
               <div class="bar"><i style="width:66%"></i></div>
               <div class="card-due"><span>4 de 6 pasos</span><b>14:30</b></div>
             </div>
-            <div class="card is-completada">
+            <div role="link" tabindex="0" class="card is-completada">
               <div class="card-top"><span class="badge completada"><svg class="ico ico-sm"><use href="#i-check"/></svg>Completada</span></div>
               <div class="card-body"><span class="card-title">Repartir kits de bienvenida</span><div class="card-meta"><span>Confirmó Sofía Ruiz, 09:42</span></div></div>
               <div class="bar"><i style="width:100%"></i></div>

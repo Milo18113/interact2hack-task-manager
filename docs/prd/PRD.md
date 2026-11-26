@@ -1,6 +1,6 @@
 # PRD · Organización del staff del Interact2Hack
 
-**Versión:** 0.1 (borrador) · **Fecha:** 23 de noviembre de 2026 · **Equipo:** Juan Burgos Landazuri y Emilio Puga
+**Versión:** 1.0 · **Fecha:** 25 de noviembre de 2026 · **Equipo:** Juan Burgos Landazuri y Emilio Puga
 **Fuentes:** descripción del proyecto final (`docs/fuentes/descripcion-proyecto.md`) y respuestas del cliente del 11 de noviembre y aclaraciones del profesor (A-xx) (`docs/cliente/preguntas.md`).
 
 Este documento describe **qué** debe hacer la herramienta y **qué no**. No describe cómo se construye: las tecnologías, los datos y las pantallas se deciden en las specs, y cómo se ve se define en `DESIGN.md`.

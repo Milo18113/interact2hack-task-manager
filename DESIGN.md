@@ -154,6 +154,7 @@ Ninguna pantalla hace scroll horizontal a 390 px ni a 360 px (H-10). Las columna
 | Primario | `--color-accion` | `--color-sobre-accion` | — | Fondo `--color-ahora` |
 | Secundario | transparente | `--color-accion` | 2 px `--color-accion` | Fondo `--color-accion`, texto tinta |
 | Sobre morado | `--color-sobre-accion` | `--color-texto` | — | Texto `--color-ahora` |
+| Peligro | transparente | `--color-vencida` | 2 px `--color-vencida` | Fondo `--color-vencida`, texto tinta |
 | Deshabilitado | transparente | `--color-texto-suave` | 2 px punteado `--color-borde-control` | — |
 
 - Alto 52 px, `--texto-boton`, un verbo claro («Confirmar ejecución», «Guardar avance», «Asignar», «Entendido»).
@@ -167,7 +168,7 @@ Ninguna pantalla hace scroll horizontal a 390 px ni a 360 px (H-10). Las columna
 - Ayuda debajo en `--texto-meta` y `--color-texto-suave` («Las ven todos los responsables de la tarea»).
 - Error: borde y mensaje en `--color-vencida`, mensaje debajo del campo y enlazado con `aria-describedby`.
 - Foco: anillo de 3 px `--color-foco` con 2 px de separación.
-- El formulario del administrador para crear una tarea usa estos mismos campos: título, fecha y hora, lugar o aula, pasos del checklist y responsables (R6).
+- El formulario del administrador para crear o editar una tarea usa estos mismos campos: título, fecha y hora, lugar o aula, más el Editor de pasos (§7.12) y el Selector de responsables (§7.13) (R6).
 
 ### 7.3 Insignia de estado
 
@@ -267,7 +268,34 @@ Fila de celdas sobre el tablero, una por estado y en el orden de R19 (R22).
 - **Vencidas con 1 o más:** la celda va rellena de `--color-vencida` con número y texto en tinta. Con 0, celda normal con «0».
 - Columnas según el ancho (§6): 5, 3 o 2.
 
-### 7.12 Estados de pantalla
+### 7.12 Editor de pasos del checklist
+
+En el formulario de tarea del administrador.
+
+- Lista de pasos numerados («01», «02»…, numeral en `--texto-tarea` y `--color-accion`), cada uno con un campo de texto de una línea en `--texto-base`.
+- Cada paso tiene un botón «Quitar» con icono ×, área de 44 × 44 px y nombre accesible con su número: `aria-label="Quitar paso 3"`.
+- Debajo, botón secundario «Agregar paso». El foco pasa al campo del paso nuevo.
+- Se exige al menos un paso (R6, S-02): con un solo paso, «Quitar» queda deshabilitado con su motivo («La tarea necesita al menos un paso»); al guardar sin pasos, error en `--color-vencida` bajo la lista.
+
+### 7.13 Selector de responsables
+
+En el formulario de tarea del administrador.
+
+- Campo de búsqueda por nombre y, debajo, la lista de estudiantes con la misma casilla del Ítem de checklist (§7.5): nombre en `--texto-base`, correo en `--texto-meta`. Fila completa tocable, alto mínimo 52 px.
+- Solo aparecen estudiantes con cuenta activa (R7, R24); nunca administradores.
+- Los elegidos se muestran arriba como chips (radio 0, borde 2 px `--color-borde`, Sora 600 de 13 px, alto 44 px) con su × para quitarlos.
+- Se puede guardar sin responsables; la ayuda lo dice: «Sin responsables, la tarea queda No asignada» (R6, R9).
+
+### 7.14 Fila de estudiante
+
+En la gestión de usuarios del administrador (PRD §2).
+
+- Fila con fondo `--color-superficie` y borde inferior `--borde-fino` `--color-borde`: nombre en Sora 600 de 16 px, y debajo correo y teléfono en `--texto-meta` y `--color-texto-suave` (R4).
+- A la derecha, «Editar» (secundario) y «Dar de baja» (peligro). En celular, los botones bajan debajo de los datos a ancho completo.
+- «Dar de baja» abre el mismo diálogo de §7.6, con el botón de peligro como acción: «¿Dar de baja a Ana Torres? Perderá el acceso y se retirará de sus 3 tareas. Se conserva quién confirmó cada una.» (R24).
+- Sobre la lista, el botón primario «Crear estudiante» (el bloque morado de la pantalla).
+
+### 7.15 Estados de pantalla
 
 | Estado | Qué se muestra |
 | --- | --- |
@@ -296,7 +324,7 @@ Contraste calculado con la fórmula de WCAG 2.x (los colores con transparencia, 
 | Tinta sobre `--color-proxima` (insignia) | 13.01:1 | 4.5:1 |
 | `--color-texto` sobre `--color-completada` (insignia sobre superficie) | 13.66:1 | 4.5:1 |
 | `--color-vencida` sobre `--color-fondo` (hora vencida) | 7.40:1 | 4.5:1 |
-| `--color-vencida` sobre `--color-superficie` | 7.06:1 | 4.5:1 |
+| `--color-vencida` sobre `--color-superficie` (botón de peligro, errores) | 7.06:1 | 4.5:1 |
 | `--color-borde-control` sobre `--color-fondo` | 3.71:1 | 3:1 |
 | `--color-borde-control` sobre `--color-superficie` | 3.78:1 | 3:1 |
 | `--color-foco` sobre `--color-fondo` | 13.61:1 | 3:1 |
@@ -365,3 +393,5 @@ Además:
 | D-19 | La fecha va en palabras. | Con tareas de hoy, mañana, en 3 días y vencida, las franjas dicen «Hoy», «Mañana», «En 3 días» y «Venció», con la hora a la derecha; en el tablero, «Mañana (2 de 5)». |
 | D-20 | Big Shoulders nunca baja de 24 px. | En las herramientas del navegador, todo elemento con `--fuente-display` tiene un tamaño calculado de 24 px o más. |
 | D-21 | Se respeta el movimiento reducido. | Con `prefers-reduced-motion: reduce` emulado, ninguna transición dura más de 0 ms. |
+| D-22 | Una tarea no se guarda sin pasos. | En el formulario de tarea, quitar todos los pasos y guardar muestra el error bajo el Editor de pasos y no crea la tarea. |
+| D-23 | El Selector de responsables solo ofrece estudiantes activos. | Con un administrador y un estudiante dado de baja en los datos de prueba, ninguno de los dos aparece en la lista. |
